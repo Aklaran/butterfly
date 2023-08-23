@@ -1,9 +1,12 @@
 import styles from './page.module.css'
-import { CheckConnection } from '@/components/fetcher'
+import Trick from '@/models/trick';
+import TrickCard from '@/components/trick-card';
+import React from 'react';
+import { getTricks } from './api/tricks/route';
 
 export default async function Home() {
-  const isConnected = await CheckConnection();
+  const tricks = await getTricks();
 
-  return (<div><h1 className={styles.header}>{isConnected ? "You're in." : "Boo!"}</h1></div>)
+  return (<ul>{tricks.map((trick: Trick) => (<TrickCard trick={trick} />))}</ul>)
 }
 
