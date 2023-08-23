@@ -14,6 +14,8 @@ export async function GET() {
   }
 }
 
+// https://github.com/vercel/next.js/issues/48344#issuecomment-1548493646
+
 export async function getTricks() {
   const url = await import("@/app/api/tricks/route");
   const response = await (await url.GET())?.json();
