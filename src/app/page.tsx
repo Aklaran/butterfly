@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { Fetch } from '@/components/fetcher'
+import { Header } from './styles';
 
 export default async function Home() {
   const isConnected = await Fetch();
@@ -12,9 +13,9 @@ export default async function Home() {
       </Head>
 
       <main>
-        <h1 className="title">
+        <Header className="title">
           Welcome to <a href="https://nextjs.org">Next.js with MongoDB!</a>
-        </h1>
+        </Header>
 
         {isConnected ? (
           <h2 className="subtitle">You are connected to MongoDB</h2>
@@ -75,3 +76,4 @@ export default async function Home() {
     </div>
   )
 }
+
