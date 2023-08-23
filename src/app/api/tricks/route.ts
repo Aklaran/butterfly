@@ -13,3 +13,9 @@ export async function GET() {
     console.error(e);
   }
 }
+
+export async function getTricks() {
+  const url = await import("@/app/api/tricks/route");
+  const response = await (await url.GET())?.json();
+  return response;
+}
