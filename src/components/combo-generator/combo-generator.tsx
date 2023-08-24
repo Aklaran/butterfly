@@ -32,11 +32,6 @@ function getRandomElement<T>(array: T[]): T {
 	return array[(Math.random() * array.length) | 0];
 }
 
-function getRandomKey(dict: { [index: string]: string }): string {
-	const keys = Object.keys(dict);
-	return dict[keys[(keys.length * Math.random()) << 0]];
-}
-
 function generateCombo(tricks: Trick[], length: number): string {
 	console.log(tricks);
 
