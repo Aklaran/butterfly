@@ -1,22 +1,24 @@
-import '@/css/reset.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import '@/css/reset.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import React from 'react';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Trickidex',
-  description: "Gotta land 'em all",
-}
+	title: 'Trickidex',
+	// eslint-disable-next-line quotes
+	description: "Gotta land 'em all",
+};
 
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode
+	children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
-  )
+	return (
+		<html lang="en">
+			<body className={inter.className}>{children}</body>
+		</html>
+	);
 }
