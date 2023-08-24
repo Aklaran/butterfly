@@ -1,0 +1,69 @@
+{
+	"$jsonSchema": {
+		"bsonType": "object",
+		"required": ["_id", "name", "entryTransitions", "landingStances"],
+		"properties": {
+			"id": {
+				"bsonType": "objectId"
+			},
+			"name": {
+				"bsonType": "string"
+			},
+			"landingStances": {
+				"bsonType": "array",
+				"items": {
+					"enum": [
+						"unified",
+						"complete",
+						"hyper",
+						"semi",
+						"mega",
+						"turbo"
+					]
+				}
+			},
+			"entryTransitions": {
+				"bsonType": "object",
+				"required": [
+					"unified",
+					"complete",
+					"hyper",
+					"semi",
+					"mega",
+					"turbo"
+				],
+				"patternProperties": {
+					"complete|hyper|semi|mega|turbo|unified": {
+						"bsonType": "array",
+						"items": {
+							"enum": [
+								"punch",
+								"pop",
+								"reverse-pop",
+								"bound",
+								"backswing",
+								"wrap",
+								"missleg",
+								"rapid",
+								"carrythrough",
+								"frontswing",
+								"masterswing",
+								"lotusswing",
+								"redirect",
+								"vanish",
+								"reversal",
+								"skip"
+							]
+						}
+					}
+				}
+			},
+			"tags": {
+				"bsonType": ["null", "array"],
+				"items": {
+					"bsonType": "string"
+				}
+			}
+		}
+	}
+}
