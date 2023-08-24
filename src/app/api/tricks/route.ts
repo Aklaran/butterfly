@@ -1,5 +1,6 @@
 import clientPromise from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
+import { cache } from 'react';
 
 export async function GET() {
 	try {
@@ -20,8 +21,8 @@ export async function GET() {
 
 // https://github.com/vercel/next.js/issues/48344#issuecomment-1548493646
 
-export async function getTricks() {
+export const getTricks = cache(async () => {
 	const url = await import('@/app/api/tricks/route');
 	const response = await (await url.GET())?.json();
 	return response;
-}
+});

@@ -5,6 +5,6 @@ export default class Trick {
 		public name: string,
 		public entryTransitions: { [index: string]: string },
 		public landingStances: string[],
-		public id: ObjectId
+		public _id: ObjectId
 	) {}
 }
