@@ -59,7 +59,7 @@
 				}
 			},
 			"tags": {
-				"bsonType": ["null", "array"],
+				"bsonType": "array",
 				"items": {
 					"bsonType": "string"
 				}
