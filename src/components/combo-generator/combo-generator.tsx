@@ -73,4 +73,18 @@ function generateCombo(tricks: Trick[], length: number): string {
 
 		console.log(combo);
 	}
+
+	let result = combo[0].trick + ' ' + combo[0].exitStance;
+	for (let i = 1; i < combo.length; i++) {
+		const step = combo[i];
+		result +=
+			' - ' +
+			step.entryTransition +
+			' ' +
+			step.trick +
+			' ' +
+			step.exitStance;
+	}
+
+	return result;
 }
