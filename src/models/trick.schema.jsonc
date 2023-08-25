@@ -1,3 +1,5 @@
+// This should match the Validation schema in the database
+
 {
 	"$jsonSchema": {
 		"bsonType": "object",
@@ -8,6 +10,12 @@
 			},
 			"name": {
 				"bsonType": "string"
+			},
+			"aliases": {
+				"bsonType": "array",
+				"items": {
+					"bsonType": "string"
+				}
 			},
 			"landingStances": {
 				"bsonType": "array",
@@ -21,6 +29,16 @@
 						"turbo"
 					]
 				}
+			},
+			"defaultLandingStance": {
+				"enum": [
+					"unified",
+					"complete",
+					"hyper",
+					"semi",
+					"mega",
+					"turbo"
+				]
 			},
 			"entryTransitions": {
 				"bsonType": "object",
@@ -57,6 +75,21 @@
 						}
 					}
 				}
+			},
+			"numberOfFlips": {
+				"bsonType": "int"
+			},
+			"numberOfTwists": {
+				"bsonType": "int"
+			},
+			"numberOfKicks": {
+				"bsonType": "int"
+			},
+			"axis": {
+				"enum": ["vert", "invert", "off"]
+			},
+			"variation": {
+				"bsonType": "string"
 			},
 			"tags": {
 				"bsonType": "array",
