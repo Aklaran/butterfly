@@ -1,4 +1,4 @@
-import Trick from '@/models/trick';
+import Trick from '@/models/trick/trick';
 import TrickCard from '@/components/trick-card';
 import React from 'react';
 import { getTricks } from './api/tricks/route';
