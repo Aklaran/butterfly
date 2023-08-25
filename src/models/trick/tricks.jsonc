@@ -1,0 +1,223 @@
+[
+	{
+		"name": "540",
+		"aliases": [],
+		"entryTransitions": {
+			"unified": ["reverse-pop"],
+			"complete": ["vanish"],
+			"hyper": ["redirect"],
+			"semi": ["frontswing"],
+			"mega": ["vanish"],
+			"turbo": ["reverse-pop"]
+		},
+		"landingStances": ["complete", "hyper", "semi", "mega"],
+		"defaultLandingStance": "hyper",
+		"numberOfFlips": 0,
+		"degreesOfRotation": 180,
+		"numberOfKicks": 1,
+		"axis": "vert",
+		"variation": "",
+		"tags": []
+	},
+	{
+		"name": "aerial",
+		"aliases": [],
+		"entryTransitions": {
+			"unified": ["reverse-pop"],
+			"complete": ["reversal", "missleg"],
+			"hyper": ["vanish"],
+			"semi": [],
+			"mega": ["redirect", "missleg"],
+			"turbo": ["reverse-pop"]
+		},
+		"landingStances": ["hyper", "semi", "mega"],
+		"defaultLandingStance": "hyper",
+		"numberOfFlips": 1,
+		"degreesOfRotation": 0,
+		"numberOfKicks": 0,
+		"axis": "invert",
+		"variation": "",
+		"tags": []
+	},
+	{
+		"name": "cartwheel",
+		"aliases": ["cart"],
+		"entryTransitions": {
+			"unified": ["reverse-pop"],
+			"complete": ["reversal", "missleg"],
+			"hyper": ["vanish"],
+			"semi": [],
+			"mega": ["redirect", "missleg"],
+			"turbo": ["reverse-pop"]
+		},
+		"landingStances": ["hyper", "semi", "mega"],
+		"defaultLandingStance": "hyper",
+		"numberOfFlips": 1,
+		"degreesOfRotation": 0,
+		"numberOfKicks": 0,
+		"axis": "invert",
+		"variation": "",
+		"tags": []
+	},
+	{
+		"name": "corkscrew",
+		"aliases": ["cork"],
+		"entryTransitions": {
+			"unified": ["reverse-pop"],
+			"complete": ["backswing"],
+			"hyper": ["vanish"],
+			"semi": [],
+			"mega": [],
+			"turbo": ["reverse-pop"]
+		},
+		"landingStances": ["hyper", "semi", "mega", "complete"],
+		"defaultLandingStance": "complete",
+		"numberOfFlips": 1,
+		"degreesOfRotation": 360,
+		"numberOfKicks": 0,
+		"axis": "off",
+		"variation": "",
+		"tags": []
+	},
+	{
+		"name": "gainer",
+		"aliases": [],
+		"entryTransitions": {
+			"unified": ["reverse-pop"],
+			"complete": ["backswing"],
+			"hyper": ["vanish"],
+			"semi": [],
+			"mega": [],
+			"turbo": ["reverse-pop"]
+		},
+		"landingStances": ["hyper", "semi", "mega"],
+		"defaultLandingStance": "hyper",
+		"numberOfFlips": 1,
+		"degreesOfRotation": 0,
+		"numberOfKicks": 0,
+		"axis": "invert",
+		"variation": "",
+		"tags": []
+	},
+	{
+		"name": "touchdown raiz",
+		"aliases": ["tdr", "td raiz"],
+		"entryTransitions": {
+			"unified": ["reverse-pop"],
+			"complete": ["vanish"],
+			"hyper": ["redirect"],
+			"semi": ["frontswing"],
+			"mega": ["vanish"],
+			"turbo": ["reverse-pop"]
+		},
+		"landingStances": ["complete", "mega"],
+		"defaultLandingStance": "complete",
+		"numberOfFlips": 1,
+		"degreesOfRotation": 0,
+		"numberOfKicks": 0,
+		"axis": "off",
+		"variation": "",
+		"tags": []
+	},
+	{
+		"name": "butterfly twist",
+		"aliases": ["b-twist"],
+		"entryTransitions": {
+			"unified": ["reverse-pop"],
+			"complete": ["reversal"],
+			"hyper": ["vanish"],
+			"semi": [],
+			"mega": ["redirect", "missleg"],
+			"turbo": ["reverse-pop"]
+		},
+		"landingStances": [
+			"unified",
+			"complete",
+			"hyper",
+			"mega",
+			"semi",
+			"turbo"
+		],
+		"defaultLandingStance": "complete",
+		"numberOfFlips": 0,
+		"degreesOfRotation": 360,
+		"numberOfKicks": 0,
+		"axis": "off",
+		"variation": "",
+		"tags": []
+	},
+	{
+		"name": "full twist",
+		"aliases": ["full"],
+		"entryTransitions": {
+			"unified": ["punch"],
+			"complete": ["pop"],
+			"hyper": ["pop", "wrap"],
+			"semi": ["wrap"],
+			"mega": ["redirect", "missleg"],
+			"turbo": ["punch"]
+		},
+		"landingStances": [
+			"unified",
+			"complete",
+			"hyper",
+			"mega",
+			"semi",
+			"turbo"
+		],
+		"defaultLandingStance": "complete",
+		"numberOfFlips": 1,
+		"degreesOfRotation": 360,
+		"numberOfKicks": 0,
+		"axis": "invert",
+		"variation": "",
+		"tags": []
+	},
+	{
+		"name": "full twist doubleleg",
+		"aliases": ["full doubleleg", "full d-leg"],
+		"entryTransitions": {
+			"unified": ["punch"],
+			"complete": ["pop"],
+			"hyper": ["pop", "wrap"],
+			"semi": ["wrap"],
+			"mega": ["redirect", "missleg"],
+			"turbo": ["punch"]
+		},
+		"landingStances": [
+			"unified",
+			"complete",
+			"hyper",
+			"mega",
+			"semi",
+			"turbo"
+		],
+		"defaultLandingStance": "complete",
+		"numberOfFlips": 1,
+		"degreesOfRotation": 360,
+		"numberOfKicks": 0,
+		"axis": "invert",
+		"variation": "doubleleg",
+		"tags": []
+	},
+	{
+		"name": "arabian",
+		"aliases": ["half"],
+		"entryTransitions": {
+			"unified": ["punch"],
+			"complete": ["pop"],
+			"hyper": ["pop", "wrap"],
+			"semi": ["wrap"],
+			"mega": ["redirect", "missleg"],
+			"turbo": ["punch"]
+		},
+		"landingStances": ["mega", "semi", "turbo"],
+		"defaultLandingStance": "turbo",
+		"numberOfFlips": 1,
+		"degreesOfRotation": 180,
+		"numberOfKicks": 0,
+		"axis": "invert",
+		"variation": "",
+		"tags": []
+	}
+]

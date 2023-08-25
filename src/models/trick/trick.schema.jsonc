@@ -1,0 +1,102 @@
+// This should match the Validation schema in the database
+
+{
+	"$jsonSchema": {
+		"bsonType": "object",
+		"required": ["_id", "name", "entryTransitions", "landingStances"],
+		"properties": {
+			"id": {
+				"bsonType": "objectId"
+			},
+			"name": {
+				"bsonType": "string"
+			},
+			"aliases": {
+				"bsonType": "array",
+				"items": {
+					"bsonType": "string"
+				}
+			},
+			"landingStances": {
+				"bsonType": "array",
+				"items": {
+					"enum": [
+						"unified",
+						"complete",
+						"hyper",
+						"semi",
+						"mega",
+						"turbo"
+					]
+				}
+			},
+			"defaultLandingStance": {
+				"enum": [
+					"unified",
+					"complete",
+					"hyper",
+					"semi",
+					"mega",
+					"turbo"
+				]
+			},
+			"entryTransitions": {
+				"bsonType": "object",
+				"required": [
+					"unified",
+					"complete",
+					"hyper",
+					"semi",
+					"mega",
+					"turbo"
+				],
+				"patternProperties": {
+					"complete|hyper|semi|mega|turbo|unified": {
+						"bsonType": "array",
+						"items": {
+							"enum": [
+								"punch",
+								"pop",
+								"reverse-pop",
+								"bound",
+								"backswing",
+								"wrap",
+								"missleg",
+								"rapid",
+								"carrythrough",
+								"frontswing",
+								"masterswing",
+								"lotusswing",
+								"redirect",
+								"vanish",
+								"reversal",
+								"skip"
+							]
+						}
+					}
+				}
+			},
+			"numberOfFlips": {
+				"bsonType": "int"
+			},
+			"numberOfTwists": {
+				"bsonType": "int"
+			},
+			"numberOfKicks": {
+				"bsonType": "int"
+			},
+			"axis": {
+				"enum": ["vert", "invert", "off"]
+			},
+			"variation": {
+				"bsonType": "string"
+			},
+			"tags": {
+				"bsonType": "array",
+				"items": {
+					"bsonType": "string"
+				}
+			}
+		}
+	}
+}

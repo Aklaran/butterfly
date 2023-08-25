@@ -1,4 +1,4 @@
-import Trick from '@/models/trick';
+import Trick from '@/models/trick/trick';
 import React from 'react';
 
 function TrickCard({ trick }: { trick: Trick }) {
