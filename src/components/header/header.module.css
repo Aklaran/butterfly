@@ -1,0 +1,9 @@
+.header {
+	background-color: var(--color-offblack);
+	color: var(--color-white);
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	padding-block-end: 18px;
+	height: 15%;
+}

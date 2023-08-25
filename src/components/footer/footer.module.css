@@ -1,0 +1,15 @@
+.footer {
+	height: 5%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background: var(--color-gray-500);
+
+	color: var(--color-white);
+}
+
+.link {
+	text-decoration: none;
+	color: var(--color-primary);
+}

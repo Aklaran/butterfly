@@ -1,20 +1,35 @@
-import Trick from '@/models/trick/trick';
-import TrickCard from '@/components/trick-card';
 import React from 'react';
-import { getTricks } from './api/tricks/route';
-import ComboGenerator from '@/components/combo-generator/combo-generator';
+import Link from 'next/link';
+
+import styles from './page.module.css';
 
 export default async function Home() {
-	const tricks = await getTricks();
+	const pages = [
+		{
+			label: 'Tricktionary',
+			route: '/tricks',
+		},
+		{
+			label: 'Combo Generator',
+			route: '/combo-gen',
+		},
+		{
+			label: 'What is this?',
+			route: '/about',
+		},
+	];
 
 	return (
-		<div className="wrapper">
-			<ul>
-				{tricks.map((trick: Trick) => (
-					<TrickCard key={trick._id.toString()} trick={trick} />
+		<div className={styles.wrapper}>
+			<ul className={styles.navList}>
+				{pages.map(({ label, route }) => (
+					<li key={route} className={styles.navItem}>
+						<Link href={route} className={styles.link}>
+							{label}
+						</Link>
+					</li>
 				))}
 			</ul>
-			<ComboGenerator tricks={tricks} />
 		</div>
 	);
 }

@@ -1,4 +1,7 @@
+import Footer from '@/components/footer/footer';
+import Header from '@/components/header/header';
 import '@/css/reset.css';
+import '@/css/global-styles.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import React from 'react';
@@ -18,7 +21,11 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>{children}</body>
+			<body className={inter.className}>
+				<Header />
+				{children}
+				<Footer />
+			</body>
 		</html>
 	);
 }

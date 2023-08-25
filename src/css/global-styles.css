@@ -1,0 +1,16 @@
+html {
+	--color-white: hsl(0deg 0% 100%);
+	--color-offblack: hsl(24deg 5% 6%);
+	--color-gray-100: hsl(40deg 12% 95%);
+	--color-gray-300: hsl(35deg 8% 80%);
+	--color-gray-500: hsl(30deg 4% 60%);
+	--color-gray-700: hsl(28deg 5% 40%);
+	--color-gray-900: hsl(24deg 6% 16%);
+	--color-primary: hsl(334deg 61.5% 35.7%);
+	--color-secondary: hsl(180deg 34% 37%);
+	--color-urgent: hsl(0deg 55% 54%);
+
+	--font-weight-normal: 400;
+	--font-weight-medium: 550;
+	--font-weight-bold: 700;
+}
