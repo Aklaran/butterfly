@@ -1,6 +1,5 @@
 import clientPromise from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
-import { cache } from 'react';
 
 export async function GET() {
 	try {
