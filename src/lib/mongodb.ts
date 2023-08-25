@@ -31,12 +31,3 @@ if (process.env.NODE_ENV === 'development') {
 // Export a module-scoped MongoClient promise. By doing this in a
 // separate module, the client can be shared across functions.
 export default clientPromise;
-
-// https://github.com/vercel/next.js/issues/48344#issuecomment-1548493646
-// TODO: Put this into a controller
-
-// export const getTricks = cache(async () => {
-// 	const url = await import('@/app/api/tricks/route');
-// 	const response = await (await url.GET())?.json();
-// 	return response;
-// });
