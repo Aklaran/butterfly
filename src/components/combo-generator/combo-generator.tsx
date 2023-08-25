@@ -1,5 +1,5 @@
 'use client';
-import Trick from '@/models/trick';
+import Trick from '@/models/trick/trick';
 import React from 'react';
 
 export default function ComboGenerator({ tricks }: { tricks: Trick[] }) {
