@@ -1,6 +1,7 @@
 'use client';
-import Trick from '@/models/trick/trick';
 import React from 'react';
+
+import Trick from '@/models/trick/trick';
 
 export default function ComboGenerator({ tricks }: { tricks: Trick[] }) {
 	const [generatedCombo, setGeneratedCombo] = React.useState('');
