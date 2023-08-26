@@ -1,0 +1,13 @@
+{
+	"trickName": "",
+	"userID": "",
+	"entryTransitions": {
+		"unified": [""],
+		"complete": [""],
+		"hyper": [""],
+		"semi": [""],
+		"mega": [""],
+		"turbo": [""]
+	},
+	"landingStances": [""]
+}

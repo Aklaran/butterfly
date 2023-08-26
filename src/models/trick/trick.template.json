@@ -16,5 +16,7 @@
 	"numberOfKicks": 0,
 	"axis": "",
 	"variation": "",
+	"prerequisites": [""],
+	"variations": [""],
 	"tags": []
 }
