@@ -6,9 +6,9 @@ import React from 'react';
 
 import Footer from '@/components/footer/footer';
 import Header from '@/components/header/header';
+import UserIDProvider from '@/components/user-id-provider/user-id-provider';
 
 import type { Metadata } from 'next';
-import UserIDProvider from '@/components/user-id-provider/user-id-provider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
