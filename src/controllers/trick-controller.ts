@@ -4,8 +4,6 @@ import clientPromise from '@/lib/mongodb';
 // import { cache } from 'react';
 import Trick from '@/models/trick/trick';
 
-export const revalidate = 1;
-
 export default class TrickController {
 	static readonly DB = process.env.DB_NAME as string;
 	static readonly COLLECTION = process.env.TRICKS_COLLECTION_NAME as string;

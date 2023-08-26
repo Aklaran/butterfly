@@ -16,6 +16,7 @@ export default function TrickTableItem({
 		<li key={key} className={styles.wrapper}>
 			<Link href={`/tricks/${trick.name}`}>
 				<p>{trick.name}</p>
+
 				<input type='checkbox' />
 			</Link>
 		</li>
