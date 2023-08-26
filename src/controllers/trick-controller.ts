@@ -62,7 +62,6 @@ export default class TrickController {
 				result.push(trick);
 			}
 
-			console.log(result.length);
 			return result;
 
 			// 	cache(async () => {

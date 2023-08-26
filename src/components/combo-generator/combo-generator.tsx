@@ -12,7 +12,7 @@ export default function ComboGenerator({ tricks }: { tricks: Trick[] }) {
 	}
 
 	return (
-		<div className="wrapper">
+		<div className='wrapper'>
 			<form onSubmit={handleSubmit}>
 				<textarea value={generatedCombo} readOnly></textarea>
 				<button>Generate!</button>
@@ -34,8 +34,6 @@ function getRandomElement<T>(array: T[]): T {
 }
 
 function generateCombo(tricks: Trick[], length: number): string {
-	console.log(tricks);
-
 	const combo: ComboStep[] = [];
 	const randomTrick = getRandomElement(tricks);
 	combo.push(
@@ -46,17 +44,12 @@ function generateCombo(tricks: Trick[], length: number): string {
 		)
 	);
 
-	console.log(combo);
-
 	while (combo.length < length) {
 		const lastLanding = combo[combo.length - 1].exitStance;
-		console.log('lastlanding', lastLanding);
 
 		const candidates = tricks.filter((trick) => {
 			return Object.keys(trick.entryTransitions).includes(lastLanding);
 		});
-
-		console.log('candidates', candidates);
 
 		const nextTrick = getRandomElement(candidates);
 		combo.push(

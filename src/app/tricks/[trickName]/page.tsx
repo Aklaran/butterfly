@@ -1,8 +1,9 @@
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 
-import styles from './page.module.css';
 import TrickController from '@/controllers/trick-controller';
+
+import styles from './page.module.css';
 
 interface TrickDetailPageProps {
 	params: ParsedUrlQuery;
