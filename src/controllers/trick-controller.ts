@@ -43,7 +43,7 @@ export default class TrickController {
 				.db(TrickController.DB)
 				.collection(TrickController.COLLECTION);
 		} catch (e) {
-			console.log(
+			throw new Error(
 				`TrickController initialize() failed with error: ${
 					(e as Error).message
 				}`
