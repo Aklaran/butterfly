@@ -22,7 +22,7 @@ export default function TrickTableItem({
 	);
 }
 
-// TODO: When I get back, gotta make the TrickDetail page and link to it in the listitems
+// TODO: When I get back, gotta make the TrickDetail page and link to it in the listitems DONE
 // then merge this pr and rebase the UserTrick pr
 // then wire up the UserTrick controller
 // then figure out where to place userID and default trickset generation in the app
