@@ -1,9 +1,10 @@
 import { Collection } from 'mongodb';
-// import { cache } from 'react';
-
-export const revalidate = 1;
 
 import clientPromise from '@/lib/mongodb';
+// import { cache } from 'react';
+import Trick from '@/models/trick/trick';
+
+export const revalidate = 1;
 
 export default class TrickController {
 	static readonly DB = process.env.DB_NAME as string;
@@ -50,16 +51,19 @@ export default class TrickController {
 		}
 	}
 
-	async getTricks() {
-		console.log('getTricks() called');
-		this.initialized.then(async () => {
-			console.log('getTricks() confirmed inited');
-
+	async getAllTricks() {
+		return this.initialized.then(async () => {
 			const cursor = (this._collection as Collection).find({}).limit(10);
 
+			const result = [];
+
 			for await (const doc of cursor) {
-				console.log(doc);
+				const trick = Trick.FromMongoDocument(doc);
+				result.push(trick);
 			}
+
+			console.log(result.length);
+			return result;
 
 			// 	cache(async () => {
 			// 		console.log('getTricks() inside cache block');
