@@ -77,4 +77,20 @@ export default class TrickController {
 			// 	});
 		});
 	}
+
+	async getTrick(name: string) {
+		return this.initialized.then(async () => {
+			const cursor = await (this._collection as Collection).findOne({
+				name: name,
+			});
+
+			if (cursor === null) {
+				throw new Error(
+					`TrickController.getTrick() failed to fetch trick with name: ${name}`
+				);
+			}
+
+			return Trick.FromMongoDocument(cursor);
+		});
+	}
 }
