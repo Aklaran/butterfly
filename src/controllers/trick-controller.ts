@@ -1,9 +1,7 @@
 import { Collection } from 'mongodb';
-import { cache } from 'react';
+// import { cache } from 'react';
 
 export const revalidate = 1;
-
-import Trick from '@/models/trick/trick';
 
 import clientPromise from '@/lib/mongodb';
 
