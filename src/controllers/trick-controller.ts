@@ -50,7 +50,9 @@ export default class TrickController {
 	}
 
 	async getAllTricks() {
+		console.log('getAllTricks called');
 		return this.initialized.then(async () => {
+			console.log('getalltricks confirmed inited');
 			const cursor = (this._collection as Collection).find({}).limit(10);
 
 			const result = [];

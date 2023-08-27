@@ -6,7 +6,7 @@ import React from 'react';
 
 import Footer from '@/components/footer/footer';
 import Header from '@/components/header/header';
-import UserIDProvider from '@/components/user-id-provider/user-id-provider';
+import { QueryProvider } from '@/components/providers/query-provider';
 
 import type { Metadata } from 'next';
 const inter = Inter({ subsets: ['latin'] });
@@ -25,11 +25,11 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<UserIDProvider>
+				<QueryProvider>
 					<Header />
 					{children}
 					<Footer />
-				</UserIDProvider>
+				</QueryProvider>
 			</body>
 		</html>
 	);
