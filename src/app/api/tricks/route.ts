@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 import clientPromise from '@/lib/mongodb';
 import Trick from '@/models/trick/trick';

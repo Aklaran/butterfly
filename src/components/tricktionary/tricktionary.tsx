@@ -4,7 +4,7 @@ import Trick from '@/models/trick/trick';
 
 import TrickTableItem from '../trick-table-item/trick-table-item';
 import styles from './tricktionary.module.css';
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 
 interface TricktionaryProps {
 	tricks: Trick[];

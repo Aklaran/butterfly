@@ -2,7 +2,7 @@ import { Collection } from 'mongodb';
 
 import clientPromise from '@/lib/mongodb';
 // import { cache } from 'react';
-import UserTrick from '@/models/user-trick/user-trick';
+// import UserTrick from '@/models/user-trick/user-trick';
 
 export default class UserTrickController {
 	static readonly DB = process.env.DB_NAME as string;
