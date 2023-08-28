@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb';
+import { Document, ObjectId, WithId } from 'mongodb';
 
 export default class UserTrick {
 	constructor(
@@ -8,4 +8,14 @@ export default class UserTrick {
 		public landingStances: string[],
 		public _id: ObjectId
 	) {}
+
+	static FromMongoDocument(doc: WithId<Document>): UserTrick {
+		return new UserTrick(
+			doc.trickName,
+			doc.userID,
+			doc.entryTransitions,
+			doc.landingStances,
+			doc._id
+		);
+	}
 }

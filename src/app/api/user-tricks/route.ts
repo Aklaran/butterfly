@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 
 import clientPromise from '@/lib/mongodb';
-import Trick from '@/models/trick/trick';
+import UserTrick from '@/models/user-trick/user-trick';
 
 const DB = process.env.DB_NAME as string;
-const COLLECTION = process.env.TRICKS_COLLECTION_NAME as string;
+const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
 
 if (!DB) {
 	console.log(process.env.DB);
@@ -13,7 +13,7 @@ if (!DB) {
 }
 
 if (!COLLECTION) {
-	console.log(process.env.TRICKS_COLLECTION_NAME);
+	console.log(process.env.USER_TRICKS_COLLECTION_NAME);
 
 	throw new Error('/tricks/ api failed: No Collection');
 }
@@ -23,12 +23,14 @@ export async function GET() {
 		const client = await clientPromise;
 		const db = client.db(DB);
 
-		const cursor = db.collection(COLLECTION).find({});
+		const cursor = db
+			.collection(COLLECTION)
+			.find({ userID: '3c22385b-8236-4d05-b95b-5832279f7300' });
 
 		const result = [];
 
 		for await (const doc of cursor) {
-			const trick = Trick.FromMongoDocument(doc);
+			const trick = UserTrick.FromMongoDocument(doc);
 			result.push(trick);
 		}
 
