@@ -5,15 +5,9 @@ import Trick from '@/models/trick/trick';
 
 import styles from './trick-table-item.module.css';
 
-export default function TrickTableItem({
-	trick,
-	key,
-}: {
-	trick: Trick;
-	key: string;
-}) {
+export default function TrickTableItem({ trick }: { trick: Trick }) {
 	return (
-		<li key={key} className={styles.wrapper}>
+		<li className={styles.wrapper}>
 			<Link href={`/tricks/${trick.name}`}>
 				<p>{trick.name}</p>
 
