@@ -12,10 +12,12 @@ interface TricktionaryProps {
 }
 
 async function getTricks() {
-	return fetch('http://localhost:3000/api/tricks').then((response) => {
-		console.log('react queried some tricks');
-		return response.json() as unknown as Trick[];
-	});
+	return fetch(`${process.env.NEXT_PUBLIC_API_URL}/tricks`).then(
+		(response) => {
+			console.log('react queried some tricks');
+			return response.json() as unknown as Trick[];
+		}
+	);
 }
 
 export default function Tricktionary({ tricks }: TricktionaryProps) {

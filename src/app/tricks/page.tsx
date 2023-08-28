@@ -4,9 +4,11 @@ import Tricktionary from '@/components/tricktionary/tricktionary';
 import Trick from '@/models/trick/trick';
 
 async function getTricks() {
-	return fetch(`${process.env.API_URL}/tricks`).then((response) => {
-		return response.json() as unknown as Trick[];
-	});
+	return fetch(`${process.env.NEXT_PUBLIC_API_URL}/tricks`).then(
+		(response) => {
+			return response.json() as unknown as Trick[];
+		}
+	);
 }
 
 export default async function TricksList() {
