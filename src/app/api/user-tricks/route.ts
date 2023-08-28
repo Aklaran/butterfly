@@ -31,8 +31,11 @@ export async function GET() {
 
 		for await (const doc of cursor) {
 			const trick = UserTrick.FromMongoDocument(doc);
+			console.log('User Trick API got trick: ', trick);
 			result.push(trick);
 		}
+
+		console.log('END OF GET', result);
 
 		return NextResponse.json(result);
 	} catch (e) {

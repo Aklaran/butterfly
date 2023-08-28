@@ -10,6 +10,7 @@ import { useUserID } from '../providers/user-id-provider';
 import UserTrick from '@/models/user-trick/user-trick';
 import TrickController from '@/controllers/trick-controller';
 import UserTrickController from '@/controllers/user-trick-controller';
+import TrickAnnotationService from '@/services/trick-annotation-service';
 
 interface TricktionaryProps {
 	tricks: Trick[];
@@ -18,6 +19,7 @@ interface TricktionaryProps {
 export default function Tricktionary({ tricks }: TricktionaryProps) {
 	const trickController = new TrickController();
 	const userTrickController = new UserTrickController();
+	const annotationService = new TrickAnnotationService();
 
 	const tricksQuery = useQuery({
 		queryKey: ['tricks'],
@@ -25,28 +27,45 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 		initialData: tricks,
 	});
 
-	//const userID = useUserID();
+	let annotatedTricks = annotationService.annotateTricks(tricks, undefined);
 
-	// React.useEffect(() => {
-	// 	console.log(userID);
+	// const userID = useUserID();
 
-	// 	// const userTricksQuery = useQuery({
-	// 	// 	queryKey: ['user-tricks'],
-	// 	// 	queryFn: userTrickController.getAllUserTricks,
-	// 	// });
-	// 	// console.log(`user tricks query gives: ${userTricksQuery.data}`);
-	// }, []);
+	const userTricksQuery = useQuery({
+		queryKey: ['user-tricks'],
+		queryFn: userTrickController.getAllUserTricks,
+	});
+
+	if (userTricksQuery.isLoading) {
+		console.log('hold up usertricksquery is loading, chill');
+		return (
+			<div>
+				<ul className={styles.wrapper}>
+					{annotatedTricks.map((trick) => (
+						<TrickTableItem trick={trick} key={trick.name} />
+					))}
+				</ul>
+			</div>
+		);
+	}
+
+	console.log(
+		'finally, in Tricktionary, userTricks is:',
+		userTricksQuery.data
+	);
+
+	annotatedTricks = annotationService.annotateTricks(
+		tricks,
+		userTricksQuery.data
+	);
 
 	return (
 		<div>
 			<ul className={styles.wrapper}>
-				{tricksQuery.data.map((trick) => (
+				{annotatedTricks.map((trick) => (
 					<TrickTableItem trick={trick} key={trick.name} />
 				))}
 			</ul>
-			{/* {userTricksQuery.data?.map((value) => (
-				<p key={value.userID}>{value.userID}</p>
-			))} */}
 		</div>
 	);
 }

@@ -1,17 +1,16 @@
 import Link from 'next/link';
 import React from 'react';
 
-import Trick from '@/models/trick/trick';
-
 import styles from './trick-table-item.module.css';
+import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
 
-export default function TrickTableItem({ trick }: { trick: Trick }) {
+export default function TrickTableItem({ trick }: { trick: AnnotatedTrick }) {
 	return (
 		<li className={styles.wrapper}>
 			<Link href={`/tricks/${trick.name}`}>
 				<p>{trick.name}</p>
 
-				<input type='checkbox' />
+				<input type='checkbox' readOnly checked={trick.isActive()} />
 			</Link>
 		</li>
 	);
