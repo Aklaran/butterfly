@@ -1,18 +1,11 @@
 import React from 'react';
 
 import Tricktionary from '@/components/tricktionary/tricktionary';
-import Trick from '@/models/trick/trick';
-
-async function getTricks() {
-	return fetch(`${process.env.NEXT_PUBLIC_API_URL}/tricks`).then(
-		(response) => {
-			return response.json() as unknown as Trick[];
-		}
-	);
-}
+import TrickController from '@/controllers/trick-controller';
 
 export default async function TricksList() {
-	const tricks = await getTricks();
+	const controller = new TrickController();
+	const tricks = await controller.getAllTricks();
 	console.log(tricks);
 
 	return <Tricktionary tricks={tricks} />;

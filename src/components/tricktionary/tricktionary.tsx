@@ -8,48 +8,34 @@ import styles from './tricktionary.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { useUserID } from '../providers/user-id-provider';
 import UserTrick from '@/models/user-trick/user-trick';
+import TrickController from '@/controllers/trick-controller';
+import UserTrickController from '@/controllers/user-trick-controller';
 
 interface TricktionaryProps {
 	tricks: Trick[];
 }
 
-async function getTricks() {
-	return fetch(`${process.env.NEXT_PUBLIC_API_URL}/tricks`).then(
-		(response) => {
-			return response.json() as unknown as Trick[];
-		}
-	);
-}
-
-async function getUserTricks() {
-	return fetch(`${process.env.NEXT_PUBLIC_API_URL}/user-tricks`).then(
-		(response) => {
-			console.log('react queried some USER tricks');
-
-			return response.json() as unknown as UserTrick[];
-		}
-	);
-}
-
 export default function Tricktionary({ tricks }: TricktionaryProps) {
+	const trickController = new TrickController();
+	const userTrickController = new UserTrickController();
+
 	const tricksQuery = useQuery({
 		queryKey: ['tricks'],
-		queryFn: getTricks,
+		queryFn: trickController.getAllTricks,
 		initialData: tricks,
 	});
 
-	const userID = useUserID();
-	console.log(userID);
+	//const userID = useUserID();
 
-	const userTricksQuery = useQuery({
-		queryKey: ['user-tricks'],
-		queryFn: getUserTricks,
-	});
-	console.log(`user tricks query gives: ${userTricksQuery.data}`);
+	// React.useEffect(() => {
+	// 	console.log(userID);
 
-	if (userTricksQuery.isLoading) return <h1>loading...</h1>;
-	if (userTricksQuery.isError)
-		return <pre>{JSON.stringify(tricksQuery.error)}</pre>;
+	// 	// const userTricksQuery = useQuery({
+	// 	// 	queryKey: ['user-tricks'],
+	// 	// 	queryFn: userTrickController.getAllUserTricks,
+	// 	// });
+	// 	// console.log(`user tricks query gives: ${userTricksQuery.data}`);
+	// }, []);
 
 	return (
 		<div>
@@ -58,9 +44,9 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 					<TrickTableItem trick={trick} key={trick.name} />
 				))}
 			</ul>
-			{userTricksQuery.data?.map((value) => (
-				<p>{value.userID}</p>
-			))}
+			{/* {userTricksQuery.data?.map((value) => (
+				<p key={value.userID}>{value.userID}</p>
+			))} */}
 		</div>
 	);
 }

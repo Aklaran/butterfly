@@ -37,3 +37,7 @@ export default function RootLayout({
 		</html>
 	);
 }
+
+// FIXME: RSC doesn't like the use of context that uses localStorage. Sad.
+// Can solve with cookies a la: https://courses.joshwcomeau.com/joy-of-react/06-full-stack-react/11-dark-mode
+// For now we're just ignoring it :3
