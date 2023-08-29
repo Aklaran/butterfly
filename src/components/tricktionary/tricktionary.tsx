@@ -42,6 +42,7 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 
 	return (
 		<div>
+			<h1>THE BIG LIST</h1>
 			<ul className={styles.wrapper}>
 				{annotatedTricks.map((trick) => (
 					<TrickTableItem trick={trick} key={trick.name} />
