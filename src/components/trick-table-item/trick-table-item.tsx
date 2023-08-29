@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
 
-import styles from './trick-table-item.module.css';
 import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
+
+import styles from './trick-table-item.module.css';
 
 export default function TrickTableItem({ trick }: { trick: AnnotatedTrick }) {
 	console.log('creating TrickTableItem for:', trick);
