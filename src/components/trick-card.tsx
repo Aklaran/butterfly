@@ -3,10 +3,8 @@ import React from 'react';
 import Trick from '@/models/trick/trick';
 
 function TrickCard({ trick }: { trick: Trick }) {
-	console.log(trick);
-
 	return (
-		<div className="wrapper">
+		<div className='wrapper'>
 			<h1>{trick.name}</h1>
 			<h2>Entry Transitions</h2>
 			<ul>

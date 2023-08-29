@@ -1,29 +1,27 @@
+import Link from 'next/link';
 import React from 'react';
 
-import Trick from '@/models/trick/trick';
+import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
 
 import styles from './trick-table-item.module.css';
-import Link from 'next/link';
 
-export default function TrickTableItem({
-	trick,
-	key,
-}: {
-	trick: Trick;
-	key: string;
-}) {
+export default function TrickTableItem({ trick }: { trick: AnnotatedTrick }) {
+	console.log('creating TrickTableItem for:', trick);
+	console.log('trick.isActive()?', trick.isActive());
+
 	return (
-		<li key={key} className={styles.wrapper}>
+		<li className={styles.wrapper}>
 			<Link href={`/tricks/${trick.name}`}>
 				<p>{trick.name}</p>
-				<input type='checkbox' />
+
+				<input type='checkbox' readOnly checked={trick.isActive()} />
 			</Link>
 		</li>
 	);
 }
 
 // TODO: When I get back, gotta make the TrickDetail page and link to it in the listitems DONE
-// then merge this pr and rebase the UserTrick pr
+// then merge this pr and rebase the UserTrick pr DONE
 // then wire up the UserTrick controller
 // then figure out where to place userID and default trickset generation in the app
 // then create a TrickAnnotationService to overlay the UserTrick and Trick models to inform the UI

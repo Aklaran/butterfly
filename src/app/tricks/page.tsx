@@ -1,20 +1,13 @@
 import React from 'react';
 
-import TrickTableItem from '@/components/trick-table-item/trick-table-item';
+import Tricktionary from '@/components/tricktionary/tricktionary';
 import TrickController from '@/controllers/trick-controller';
 
-import styles from './page.module.css';
+export const dynamic = 'force-dynamic';
 
-export default async function Tricktionary() {
+export default async function TricksList() {
 	const controller = new TrickController();
-
 	const tricks = await controller.getAllTricks();
 
-	return (
-		<ul className={styles.wrapper}>
-			{tricks.map((trick) => (
-				<TrickTableItem trick={trick} key={trick.name} />
-			))}
-		</ul>
-	);
+	return <Tricktionary tricks={tricks} />;
 }

@@ -1,19 +1,21 @@
 {
 	"$jsonSchema": {
 		"bsonType": "object",
-		"required": ["_id", "name", "entryTransitions", "landingStances"],
+		"required": [
+			"trickName",
+			"userID",
+			"entryTransitions",
+			"landingStances"
+		],
 		"properties": {
 			"id": {
 				"bsonType": "objectId"
 			},
-			"name": {
+			"trickName": {
 				"bsonType": "string"
 			},
-			"aliases": {
-				"bsonType": "array",
-				"items": {
-					"bsonType": "string"
-				}
+			"userID": {
+				"bsonType": "string"
 			},
 			"landingStances": {
 				"bsonType": "array",
@@ -27,16 +29,6 @@
 						"turbo"
 					]
 				}
-			},
-			"defaultLandingStance": {
-				"enum": [
-					"unified",
-					"complete",
-					"hyper",
-					"semi",
-					"mega",
-					"turbo"
-				]
 			},
 			"entryTransitions": {
 				"bsonType": "object",
@@ -72,39 +64,6 @@
 							]
 						}
 					}
-				}
-			},
-			"numberOfFlips": {
-				"bsonType": "int"
-			},
-			"degreesOfRotation": {
-				"bsonType": "int"
-			},
-			"numberOfKicks": {
-				"bsonType": "int"
-			},
-			"axis": {
-				"enum": ["vert", "invert", "off"]
-			},
-			"variation": {
-				"bsonType": "string"
-			},
-			"prerequisites": {
-				"bsonType": "array",
-				"items": {
-					"bsonType": "string"
-				}
-			},
-			"variations": {
-				"bsonType": "array",
-				"items": {
-					"bsonType": "string"
-				}
-			},
-			"tags": {
-				"bsonType": "array",
-				"items": {
-					"bsonType": "string"
 				}
 			}
 		}

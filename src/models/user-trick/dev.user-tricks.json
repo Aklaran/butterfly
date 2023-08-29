@@ -1,0 +1,42 @@
+[{
+  "_id": {
+    "$oid": "64ed1f4d61652b096d80d529"
+  },
+  "trickName": "aerial",
+  "userID": "3c22385b-8236-4d05-b95b-5832279f7300",
+  "entryTransitions": {
+    "unified": [],
+    "complete": [],
+    "hyper": [],
+    "semi": [
+      "frontswing"
+    ],
+    "mega": [
+      "vanish"
+    ],
+    "turbo": []
+  },
+  "landingStances": [
+    "hyper"
+  ]
+},
+{
+  "_id": {
+    "$oid": "64ed202d61652b096d80d52a"
+  },
+  "trickName": "butterfly twist",
+  "userID": "3c22385b-8236-4d05-b95b-5832279f7300",
+  "entryTransitions": {
+    "unified": [],
+    "complete": [],
+    "hyper": [],
+    "semi": [],
+    "mega": [
+      "missleg"
+    ],
+    "turbo": []
+  },
+  "landingStances": [
+    "mega"
+  ]
+}]
