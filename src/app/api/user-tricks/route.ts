@@ -23,16 +23,18 @@ export async function GET() {
 		const client = await clientPromise;
 		const db = client.db(DB);
 
-		const cursor = db
-			.collection(COLLECTION)
-			.find({ userID: '3c22385b-8236-4d05-b95b-5832279f7300' });
+		const cursor = db.collection(COLLECTION).find({ userID: 'fooid' });
 
 		const result = [];
 
-		for await (const doc of cursor) {
-			const trick = UserTrick.FromMongoDocument(doc);
-			console.log('User Trick API got trick: ', trick);
-			result.push(trick);
+		try {
+			for await (const doc of cursor) {
+				const trick = UserTrick.FromMongoDocument(doc);
+				console.log('User Trick API got trick: ', trick);
+				result.push(trick);
+			}
+		} finally {
+			cursor.close();
 		}
 
 		console.log('END OF GET', result);

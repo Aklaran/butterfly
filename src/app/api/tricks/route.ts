@@ -27,10 +27,16 @@ export async function GET() {
 
 		const result = [];
 
-		for await (const doc of cursor) {
-			const trick = Trick.FromMongoDocument(doc);
-			result.push(trick);
+		try {
+			for await (const doc of cursor) {
+				const trick = Trick.FromMongoDocument(doc);
+				result.push(trick);
+			}
+		} finally {
+			await cursor.close();
 		}
+
+		console.log('Heres all the tricks', result);
 
 		return NextResponse.json(result);
 	} catch (e) {

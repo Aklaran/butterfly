@@ -1,5 +1,3 @@
-import UserTrick from '@/models/user-trick/user-trick';
-
 export default class UserTrickController {
 	constructor() {}
 
