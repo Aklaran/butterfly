@@ -25,7 +25,7 @@ export default class TrickAnnotationService {
 		});
 
 		console.log('output annotatedTricks:', result);
-		return [];
+		return result;
 	}
 
 	// TODO:  updateAnnotations()

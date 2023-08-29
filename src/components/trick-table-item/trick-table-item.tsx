@@ -5,6 +5,9 @@ import styles from './trick-table-item.module.css';
 import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
 
 export default function TrickTableItem({ trick }: { trick: AnnotatedTrick }) {
+	console.log('creating TrickTableItem for:', trick);
+	console.log('trick.isActive()?', trick.isActive());
+
 	return (
 		<li className={styles.wrapper}>
 			<Link href={`/tricks/${trick.name}`}>

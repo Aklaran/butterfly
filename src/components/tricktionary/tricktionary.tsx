@@ -20,13 +20,12 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 	// const userID = useUserID();
 
 	const userTricksQuery = useQuery({
-		queryKey: ['fooquerykee'],
+		queryKey: ['user-tricks'],
 		queryFn: userTrickController.getAllUserTricks,
 	});
 
 	if (userTricksQuery.isLoading) {
 		console.log('hold up usertricksquery is loading, chill');
-		return <div>loading...</div>;
 	}
 
 	console.log(
@@ -38,6 +37,8 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 		tricks,
 		userTricksQuery.data
 	);
+
+	console.log('annotated tricks passed to view:', annotatedTricks);
 
 	return (
 		<div>

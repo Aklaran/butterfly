@@ -100,15 +100,19 @@ export default class AnnotatedTrick {
 	isActive() {
 		const hasOneActiveEntryStance = Object.keys(this.entryTransitions).some(
 			(stance) => {
-				this.entryTransitions[stance].some((item) => {
-					item.isActive;
+				return this.entryTransitions[stance].some((item) => {
+					return item.isActive;
 				});
 			}
 		);
 
+		console.log('one active entry:', hasOneActiveEntryStance);
+
 		const hasOneActiveLandingStance = this.landingStances.some((stance) => {
-			stance.isActive;
+			return stance.isActive;
 		});
+
+		console.log('one active landing:', hasOneActiveLandingStance);
 
 		return hasOneActiveEntryStance && hasOneActiveLandingStance;
 	}
