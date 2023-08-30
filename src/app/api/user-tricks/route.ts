@@ -23,7 +23,7 @@ export async function GET() {
 		const client = await clientPromise;
 		const db = client.db(DB);
 
-		const cursor = db.collection(COLLECTION).find({ userID: 'fooid' });
+		const cursor = db.collection(COLLECTION).find({ userID: 'bo-test-id' });
 
 		const result = [];
 

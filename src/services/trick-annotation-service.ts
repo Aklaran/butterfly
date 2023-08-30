@@ -21,7 +21,7 @@ export default class TrickAnnotationService {
 			console.log('found userTrick:', userTrick);
 			console.log(userTrick?.trickName);
 
-			return AnnotatedTrick.fromTricks(trick, userTrick);
+			return new AnnotatedTrick(trick, userTrick);
 		});
 
 		console.log('output annotatedTricks:', result);

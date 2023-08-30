@@ -11,8 +11,8 @@ export default function TrickTableItem({ trick }: { trick: AnnotatedTrick }) {
 
 	return (
 		<li className={styles.wrapper}>
-			<Link href={`/tricks/${trick.name}`}>
-				<p>{trick.name}</p>
+			<Link href={`/tricks/${trick.trick.name}`}>
+				<p>{trick.trick.name}</p>
 
 				<input type='checkbox' readOnly checked={trick.isActive()} />
 			</Link>

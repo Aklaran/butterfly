@@ -26,6 +26,7 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 
 	if (userTricksQuery.isLoading) {
 		console.log('hold up usertricksquery is loading, chill');
+		return <h1>loading...</h1>;
 	}
 
 	console.log(
@@ -45,7 +46,7 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 			<h1>THE BIG LIST</h1>
 			<ul className={styles.wrapper}>
 				{annotatedTricks.map((trick) => (
-					<TrickTableItem trick={trick} key={trick.name} />
+					<TrickTableItem trick={trick} key={trick.trick.name} />
 				))}
 			</ul>
 		</div>
