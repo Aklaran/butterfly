@@ -32,19 +32,32 @@ export default class AnnotatedTrick {
 	isActive(): boolean {
 		if (this.userTrick == undefined) return false;
 
-		const hasOneActiveEntryStance = Object.keys(
-			this.userTrick.entryTransitions
-		).some((transitionsFromStance) => {
-			return transitionsFromStance.length > 0;
-		});
+		const hasOneActiveEntryStance = this.hasActiveEntry();
 
 		console.log('one active entry:', hasOneActiveEntryStance);
 
-		const hasAnActiveLandingStance =
-			this.userTrick.landingStances.length > 0;
+		const hasAnActiveLandingStance = this.hasActiveLanding();
 
 		console.log('one active landing:', hasAnActiveLandingStance);
 
 		return hasOneActiveEntryStance && hasAnActiveLandingStance;
+	}
+
+	// PRIVATE METHODS
+
+	private hasActiveEntry(): boolean {
+		if (this.userTrick == undefined) return false;
+
+		return Object.keys(this.userTrick.entryTransitions).some(
+			(transitionsFromStance) => {
+				return transitionsFromStance.length > 0;
+			}
+		);
+	}
+
+	private hasActiveLanding(): boolean {
+		if (this.userTrick == undefined) return false;
+
+		return this.userTrick.landingStances.length > 0;
 	}
 }

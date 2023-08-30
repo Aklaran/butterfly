@@ -1,3 +1,5 @@
+import UserTrick from '@/models/user-trick/user-trick';
+
 export default class UserTrickController {
 	constructor() {}
 
@@ -6,7 +8,7 @@ export default class UserTrickController {
 			const response = await fetch(
 				`${process.env.NEXT_PUBLIC_API_URL}/user-tricks`
 			);
-			const result = await response.json();
+			const result = (await response.json()) as UserTrick[];
 
 			console.log('getAllUserTricks() fetched', result);
 			return result;
