@@ -12,16 +12,11 @@ export default class AnnotatedTrick {
 
 	// INSTANCE METHODS
 
-	isEntryTransitionActive(
+	isEntryTransitionActive = (
 		entryStance: string,
 		entryTransition: string
-	): boolean {
-		console.log(
-			`checking if ${this.userTrick?.userID}'s ${this.trick.name} has the ${entryTransition} transition from ${entryStance}`
-		);
-
-		console.log(this.userTrick?.entryTransitions[entryStance]);
-
+	): boolean => {
+		console.log('in isEntryTransitionActive, the instance is:', this);
 		if (this.userTrick == undefined) return false;
 
 		if (this.userTrick.entryTransitions[entryStance] == undefined)
@@ -36,13 +31,13 @@ export default class AnnotatedTrick {
 		return this.userTrick.entryTransitions[entryStance].includes(
 			entryTransition
 		);
-	}
+	};
 
-	isLandingStanceActive(landingStance: string): boolean {
+	isLandingStanceActive = (landingStance: string): boolean => {
 		if (this.userTrick == undefined) return false;
 
 		return this.userTrick.landingStances.includes(landingStance);
-	}
+	};
 
 	isActive(): boolean {
 		if (this.userTrick == undefined) return false;

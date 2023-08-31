@@ -7,6 +7,7 @@ import styles from './page.module.css';
 import UserTrickController from '@/controllers/user-trick-controller';
 import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
 import TableItem from '@/components/table-item/table-item';
+import TableItemGroup from '@/components/table-item-group/table-item-group';
 
 interface TrickDetailPageProps {
 	params: ParsedUrlQuery;
@@ -63,23 +64,18 @@ export default async function TrickDetailPage({
 				{Object.keys(annotatedTrick.trick.entryTransitions).map(
 					(stance) => {
 						return (
-							<div key={stance}>
-								<h3>{stance}</h3>
-								<ul>
-									{annotatedTrick.trick.entryTransitions[
+							<TableItemGroup
+								key={stance}
+								header={stance}
+								items={
+									annotatedTrick.trick.entryTransitions[
 										stance
-									].map((transition) => (
-										<TableItem
-											key={transition}
-											label={transition}
-											isActive={annotatedTrick.isEntryTransitionActive(
-												stance,
-												transition
-											)}
-										/>
-									))}
-								</ul>
-							</div>
+									]
+								}
+								isItemActive={
+									annotatedTrick.isEntryTransitionActive
+								}
+							/>
 						);
 					}
 				)}
