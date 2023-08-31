@@ -28,11 +28,6 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 		return <h1>loading...</h1>;
 	}
 
-	console.log(
-		'finally, in Tricktionary, userTricks is:',
-		userTricksQuery.data
-	);
-
 	const annotatedTricks = annotationService.annotateTricks(
 		tricks,
 		userTricksQuery.data
