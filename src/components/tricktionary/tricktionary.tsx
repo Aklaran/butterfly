@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import React from 'react';
 
 import UserTrickController from '@/controllers/user-trick-controller';
@@ -6,10 +7,8 @@ import Trick from '@/models/trick/trick';
 import TrickAnnotationService from '@/services/trick-annotation-service';
 import { useQuery } from '@tanstack/react-query';
 
-import TrickTableItem from '../trick-table-item/trick-table-item';
-import styles from './tricktionary.module.css';
 import TableItem from '../table-item/table-item';
-import Link from 'next/link';
+import styles from './tricktionary.module.css';
 
 interface TricktionaryProps {
 	tricks: Trick[];

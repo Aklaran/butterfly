@@ -1,13 +1,13 @@
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 
+import TableItemGroup from '@/components/table-item-group/table-item-group';
+import TableItem from '@/components/table-item/table-item';
 import TrickController from '@/controllers/trick-controller';
-
-import styles from './page.module.css';
 import UserTrickController from '@/controllers/user-trick-controller';
 import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
-import TableItem from '@/components/table-item/table-item';
-import TableItemGroup from '@/components/table-item-group/table-item-group';
+
+import styles from './page.module.css';
 
 interface TrickDetailPageProps {
 	params: ParsedUrlQuery;

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import TableItem from '../table-item/table-item';
 
 interface TableProps {
