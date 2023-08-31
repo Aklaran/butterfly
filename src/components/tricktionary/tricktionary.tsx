@@ -25,7 +25,6 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 
 	if (userTricksQuery.isLoading) {
 		console.log('hold up usertricksquery is loading, chill');
-		return <h1>loading...</h1>;
 	}
 
 	const annotatedTricks = annotationService.annotateTricks(

@@ -21,7 +21,6 @@ export default function Footer() {
 						Bo Tembunkiart
 					</a>
 				</p>
-				<ReactQueryDevtools initialIsOpen={false} />
 			</footer>
 		</QueryClientProvider>
 	);
