@@ -8,6 +8,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import TrickTableItem from '../trick-table-item/trick-table-item';
 import styles from './tricktionary.module.css';
+import TableItem from '../table-item/table-item';
+import Link from 'next/link';
 
 interface TricktionaryProps {
 	tricks: Trick[];
@@ -46,7 +48,15 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 			<h1>THE BIG LIST</h1>
 			<ul className={styles.wrapper}>
 				{annotatedTricks.map((trick) => (
-					<TrickTableItem trick={trick} key={trick.trick.name} />
+					<Link
+						key={trick.trick.name}
+						href={`/tricks/${trick.trick.name}`}
+					>
+						<TableItem
+							label={trick.trick.name}
+							isActive={trick.isActive()}
+						/>
+					</Link>
 				))}
 			</ul>
 		</div>
