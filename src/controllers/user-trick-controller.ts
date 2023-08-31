@@ -10,7 +10,6 @@ export default class UserTrickController {
 			);
 			const result = (await response.json()) as UserTrick[];
 
-			console.log('getAllUserTricks() fetched', result);
 			return result;
 		} catch (error) {
 			console.error('Error fetching user tricks:', error);

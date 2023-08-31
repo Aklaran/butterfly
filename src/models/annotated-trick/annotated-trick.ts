@@ -16,17 +16,10 @@ export default class AnnotatedTrick {
 		entryStance: string,
 		entryTransition: string
 	): boolean => {
-		console.log('in isEntryTransitionActive, the instance is:', this);
 		if (this.userTrick == undefined) return false;
 
 		if (this.userTrick.entryTransitions[entryStance] == undefined)
 			return false;
-
-		console.log(
-			`checking if ${this.userTrick.userID}'s ${this.trick.name} has the ${entryTransition} transition from ${entryStance}`
-		);
-
-		console.log(this.userTrick.entryTransitions[entryStance]);
 
 		return this.userTrick.entryTransitions[entryStance].includes(
 			entryTransition
@@ -43,13 +36,7 @@ export default class AnnotatedTrick {
 		if (this.userTrick == undefined) return false;
 
 		const hasOneActiveEntryStance = this.hasActiveEntry();
-
-		console.log('one active entry:', hasOneActiveEntryStance);
-
 		const hasAnActiveLandingStance = this.hasActiveLanding();
-
-		console.log('one active landing:', hasAnActiveLandingStance);
-
 		return hasOneActiveEntryStance && hasAnActiveLandingStance;
 	}
 

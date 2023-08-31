@@ -7,15 +7,15 @@ const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
 
 if (!DB) {
-	console.log(process.env.DB);
-
-	throw new Error('/tricks/ api failed: No Database');
+	throw new Error(
+		`/tricks/ api failed: No Database. DB env var: ${process.env.DB}`
+	);
 }
 
 if (!COLLECTION) {
-	console.log(process.env.USER_TRICKS_COLLECTION_NAME);
-
-	throw new Error('/tricks/ api failed: No Collection');
+	throw new Error(
+		`/tricks/ api failed: No Collection. Collection env var: ${process.env.USER_TRICKS_COLLECTION_NAME}`
+	);
 }
 
 export async function GET() {
@@ -30,18 +30,15 @@ export async function GET() {
 		try {
 			for await (const doc of cursor) {
 				const trick = UserTrick.FromMongoDocument(doc);
-				console.log('User Trick API got trick: ', trick);
 				result.push(trick);
 			}
 		} finally {
 			cursor.close();
 		}
 
-		console.log('END OF GET', result);
-
 		return NextResponse.json(result);
 	} catch (e) {
-		console.log(`GET /trick/ failed with error ${(e as Error).message}`);
+		console.error(`GET /trick/ failed with error ${(e as Error).message}`);
 		return NextResponse.error();
 	}
 }

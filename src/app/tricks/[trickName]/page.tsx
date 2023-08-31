@@ -31,6 +31,8 @@ export default async function TrickDetailPage({
 		return trick.name == trickName;
 	});
 
+	await trickController.getTrick(trickName);
+
 	if (trick == undefined) {
 		throw new Error(`TrickDetailPage failed to fetch trick: ${trickName}`);
 	}

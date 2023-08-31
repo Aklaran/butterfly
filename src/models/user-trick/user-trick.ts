@@ -18,7 +18,6 @@ export default class UserTrick {
 			doc._id
 		);
 
-		console.log('made userTrick from Mongo doc:', result);
 		return result;
 	}
 }

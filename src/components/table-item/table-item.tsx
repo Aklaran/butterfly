@@ -6,9 +6,6 @@ interface TableProps {
 }
 
 export default function TableItem({ label, isActive }: TableProps) {
-	console.log('creating TableItem for:', label);
-	console.log('trick.isActive()?', isActive);
-
 	return (
 		<>
 			<p>{label}</p>

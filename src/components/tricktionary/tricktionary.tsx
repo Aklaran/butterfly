@@ -32,8 +32,6 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 		userTricksQuery.data
 	);
 
-	console.log('annotated tricks passed to view:', annotatedTricks);
-
 	return (
 		<div>
 			<h1>THE BIG LIST</h1>
