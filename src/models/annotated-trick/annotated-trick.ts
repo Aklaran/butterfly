@@ -16,7 +16,22 @@ export default class AnnotatedTrick {
 		entryStance: string,
 		entryTransition: string
 	): boolean {
+		console.log(
+			`checking if ${this.userTrick?.userID}'s ${this.trick.name} has the ${entryTransition} transition from ${entryStance}`
+		);
+
+		console.log(this.userTrick?.entryTransitions[entryStance]);
+
 		if (this.userTrick == undefined) return false;
+
+		if (this.userTrick.entryTransitions[entryStance] == undefined)
+			return false;
+
+		console.log(
+			`checking if ${this.userTrick.userID}'s ${this.trick.name} has the ${entryTransition} transition from ${entryStance}`
+		);
+
+		console.log(this.userTrick.entryTransitions[entryStance]);
 
 		return this.userTrick.entryTransitions[entryStance].includes(
 			entryTransition

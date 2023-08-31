@@ -58,6 +58,32 @@ export default async function TrickDetailPage({
 					</li>
 				))}
 			</ul>
+			<h2>entry transitions:</h2>
+			<div>
+				{Object.keys(annotatedTrick.trick.entryTransitions).map(
+					(stance) => {
+						return (
+							<div key={stance}>
+								<h3>{stance}</h3>
+								<ul>
+									{annotatedTrick.trick.entryTransitions[
+										stance
+									].map((transition) => (
+										<TableItem
+											key={transition}
+											label={transition}
+											isActive={annotatedTrick.isEntryTransitionActive(
+												stance,
+												transition
+											)}
+										/>
+									))}
+								</ul>
+							</div>
+						);
+					}
+				)}
+			</div>
 		</div>
 	);
 }
