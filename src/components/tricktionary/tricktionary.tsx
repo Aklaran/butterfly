@@ -18,8 +18,6 @@ export default function Tricktionary({ tricks }: TricktionaryProps) {
 	const userTrickController = new UserTrickController();
 	const annotationService = new TrickAnnotationService();
 
-	// const userID = useUserID();
-
 	const userTricksQuery = useQuery({
 		queryKey: ['user-tricks'],
 		queryFn: userTrickController.getAllUserTricks,
