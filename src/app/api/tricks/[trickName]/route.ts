@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
+// import { NextResponse } from 'next/server';
 
-import clientPromise from '@/lib/mongodb';
-import Trick from '@/models/trick/trick';
+// import clientPromise from '@/lib/mongodb';
+// import Trick from '@/models/trick/trick';
 
 const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.TRICKS_COLLECTION_NAME as string;

@@ -7,9 +7,9 @@ import React from 'react';
 import Footer from '@/components/footer/footer';
 import Header from '@/components/header/header';
 import { QueryProvider } from '@/components/providers/query-provider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import type { Metadata } from 'next';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
