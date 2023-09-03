@@ -1,11 +1,8 @@
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 
-import TableItemGroup from '@/components/table-item-group/table-item-group';
-import TableItem from '@/components/table-item/table-item';
+import TrickStanceDetail from '@/components/trick-stance-detail/trick-stance-detail';
 import TrickController from '@/controllers/trick-controller';
-import UserTrickController from '@/controllers/user-trick-controller';
-import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
 
 import styles from './page.module.css';
 
@@ -17,7 +14,6 @@ export default async function TrickDetailPage({
 	params,
 }: TrickDetailPageProps) {
 	const trickController = new TrickController();
-	const userTrickController = new UserTrickController();
 
 	const { trickName } = params;
 
@@ -37,51 +33,11 @@ export default async function TrickDetailPage({
 		throw new Error(`TrickDetailPage failed to fetch trick: ${trickName}`);
 	}
 
-	const userTrick = (await userTrickController.getAllUserTricks()).find(
-		(trick) => {
-			return trick.trickName == trickName;
-		}
-	);
-
-	const annotatedTrick = new AnnotatedTrick(trick, userTrick);
-
 	return (
 		<div className={styles.wrapper}>
-			<h1>{annotatedTrick.trick.name}</h1>
-			<h2>landing stances:</h2>
-			<ul>
-				{annotatedTrick.trick.landingStances.map((stance) => (
-					<li key={stance}>
-						<TableItem
-							label={stance}
-							isActive={annotatedTrick.isLandingStanceActive(
-								stance
-							)}
-						/>
-					</li>
-				))}
-			</ul>
-			<h2>entry transitions:</h2>
-			<div>
-				{Object.keys(annotatedTrick.trick.entryTransitions).map(
-					(stance) => {
-						return (
-							<TableItemGroup
-								key={stance}
-								header={stance}
-								items={
-									annotatedTrick.trick.entryTransitions[
-										stance
-									]
-								}
-								isItemActive={
-									annotatedTrick.isEntryTransitionActive
-								}
-							/>
-						);
-					}
-				)}
-			</div>
+			<h1>{trick.name}</h1>
+			<p>Someday a description of the trick will live here</p>
+			<TrickStanceDetail baseTrick={trick} />
 		</div>
 	);
 }
