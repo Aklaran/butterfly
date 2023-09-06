@@ -1,4 +1,5 @@
 import UserTrick from '@/models/user-trick/user-trick';
+import { PartialUpdate } from '@/types/partial-update';
 
 export default class UserTrickController {
 	constructor() {}
@@ -35,6 +36,32 @@ export default class UserTrickController {
 			return result[0];
 		} catch (error) {
 			throw new Error('Error fetching user trick:', error as Error);
+		}
+	}
+
+	async updateUserTrick(trickName: string, partial: PartialUpdate) {
+		try {
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}/user-tricks/${trickName}`,
+				{
+					method: 'PATCH',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(partial),
+				}
+			);
+
+			if (!response.ok) {
+				const data = await response.json();
+				throw new Error(data.error || 'Something went wrong');
+			}
+
+			const updatedTrick = await response.json();
+			return updatedTrick;
+		} catch (error) {
+			console.error('Failed to update trick:', error);
+			throw error;
 		}
 	}
 }

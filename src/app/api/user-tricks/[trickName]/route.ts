@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import clientPromise from '@/lib/mongodb';
 import UserTrick from '@/models/user-trick/user-trick';
+import { PartialUpdate } from '@/types/partial-update';
 
 const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
@@ -48,4 +49,12 @@ export async function GET(
 		console.error(`GET /trick/ failed with error ${(e as Error).message}`);
 		return NextResponse.error();
 	}
+}
+
+export async function PATCH(
+	request: Request,
+	{ params }: { params: { trickName: string } }
+) {
+	const partial: PartialUpdate = await request.json();
+	console.log('PATCH called with request:', partial, params);
 }
