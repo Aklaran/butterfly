@@ -56,5 +56,30 @@ export async function PATCH(
 	{ params }: { params: { trickName: string } }
 ) {
 	const partial: PartialUpdate = await request.json();
+	const { trickName } = params;
 	console.log('PATCH called with request:', partial, params);
+
+	try {
+		const client = await clientPromise;
+		const db = client.db(DB);
+		const collection = db.collection(COLLECTION);
+
+		const filter = { trickName: trickName, userID: 'bo-test-id' };
+
+		const updateDoc = {
+			$set: partial,
+		};
+
+		const options = { upsert: true };
+
+		const result = await collection.updateOne(filter, updateDoc, options);
+		console.log(
+			`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
+		);
+	} catch (e) {
+		console.error(
+			`PATCH /user-trick/ failed with error ${(e as Error).message}`
+		);
+		return NextResponse.error();
+	}
 }
