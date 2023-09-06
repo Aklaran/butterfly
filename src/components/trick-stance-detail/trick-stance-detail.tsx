@@ -4,7 +4,7 @@ import React from 'react';
 import UserTrickController from '@/controllers/user-trick-controller';
 import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
 import Trick from '@/models/trick/trick';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import TableItemGroup from '../table-item-group/table-item-group';
 import TableItem from '../table-item/table-item';
@@ -17,6 +17,7 @@ interface TrickStanceDetailProps {
 export default function TrickStanceDetail({
 	baseTrick,
 }: TrickStanceDetailProps) {
+	const queryClient = useQueryClient();
 	const userTrickController = new UserTrickController();
 
 	const userTrickQuery = useQuery({
@@ -32,6 +33,11 @@ export default function TrickStanceDetail({
 	>({
 		mutationFn: (partial) => {
 			return userTrickController.updateUserTrick(baseTrick.name, partial);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ['user-tricks', baseTrick.name],
+			});
 		},
 	});
 
@@ -61,7 +67,6 @@ export default function TrickStanceDetail({
 		currState: string[],
 		isActive: boolean
 	) {
-		console.log(stance, transition, currState, isActive);
 		const transitionSet = new Set(currState);
 
 		if (isActive) {
@@ -70,10 +75,9 @@ export default function TrickStanceDetail({
 			transitionSet.delete(transition);
 		}
 
+		// dot notation - https://docs.mongodb.com/manual/reference/operator/update/positional/#update-documents-in-an-array
 		const partial = {
-			entryTransitions: {
-				[stance]: Array.from(transitionSet),
-			},
+			[`entryTransitions.${stance}`]: Array.from(transitionSet),
 		};
 
 		userTrickMutation.mutate(partial);

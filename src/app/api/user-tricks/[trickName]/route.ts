@@ -57,7 +57,6 @@ export async function PATCH(
 ) {
 	const partial: PartialUpdate = await request.json();
 	const { trickName } = params;
-	console.log('PATCH called with request:', partial, params);
 
 	try {
 		const client = await clientPromise;
@@ -76,6 +75,7 @@ export async function PATCH(
 		console.log(
 			`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
 		);
+		return NextResponse.json(result);
 	} catch (e) {
 		console.error(
 			`PATCH /user-trick/ failed with error ${(e as Error).message}`

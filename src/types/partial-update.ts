@@ -1,3 +1,3 @@
 export type PartialUpdate =
 	| { landingStances: string[] }
-	| { entryTransitions: { [key: string]: string[] } };
+	| { [key: string]: string[] };
