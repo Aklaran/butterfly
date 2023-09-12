@@ -3,7 +3,7 @@ import React from 'react';
 interface TableProps {
 	label: string;
 	isActive: boolean;
-	onActivePress: () => void;
+	onActivePress?: () => void;
 }
 
 export default function TableItem({
