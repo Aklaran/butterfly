@@ -9,22 +9,14 @@ export default class TrickAnnotationService {
 		tricks: Trick[],
 		userTricks: UserTrick[] | undefined
 	): AnnotatedTrick[] {
-		console.log('input tricks:', tricks);
-		console.log('input userTricks:', userTricks);
-
 		const result = tricks.map((trick) => {
-			console.log('annotating trick:', trick);
 			const userTrick = userTricks?.find(
 				(userTrick) => userTrick.trickName == trick.name
 			);
 
-			console.log('found userTrick:', userTrick);
-			console.log(userTrick?.trickName);
-
-			return AnnotatedTrick.fromTricks(trick, userTrick);
+			return new AnnotatedTrick(trick, userTrick);
 		});
 
-		console.log('output annotatedTricks:', result);
 		return result;
 	}
 

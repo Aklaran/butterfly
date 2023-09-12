@@ -7,6 +7,7 @@ import React from 'react';
 import Footer from '@/components/footer/footer';
 import Header from '@/components/header/header';
 import { QueryProvider } from '@/components/providers/query-provider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import type { Metadata } from 'next';
 const inter = Inter({ subsets: ['latin'] });
@@ -29,6 +30,7 @@ export default function RootLayout({
 					<Header />
 					{children}
 					<Footer />
+					<ReactQueryDevtools initialIsOpen={false} />
 				</QueryProvider>
 			</body>
 		</html>

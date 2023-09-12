@@ -2,7 +2,6 @@
 import React from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import styles from './footer.module.css';
 
@@ -21,7 +20,6 @@ export default function Footer() {
 						Bo Tembunkiart
 					</a>
 				</p>
-				<ReactQueryDevtools initialIsOpen={false} />
 			</footer>
 		</QueryClientProvider>
 	);

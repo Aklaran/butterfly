@@ -7,15 +7,15 @@ const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.TRICKS_COLLECTION_NAME as string;
 
 if (!DB) {
-	console.log(process.env.DB);
-
-	throw new Error('/tricks/ api failed: No Database');
+	throw new Error(
+		`/tricks/ api failed: No Database. DB env var: ${process.env.DB}`
+	);
 }
 
 if (!COLLECTION) {
-	console.log(process.env.TRICKS_COLLECTION_NAME);
-
-	throw new Error('/tricks/ api failed: No Collection');
+	throw new Error(
+		`/tricks/ api failed: No Collection. Collection env var: ${process.env.TRICKS_COLLECTION_NAME}`
+	);
 }
 
 export async function GET() {
@@ -36,11 +36,9 @@ export async function GET() {
 			await cursor.close();
 		}
 
-		console.log('Heres all the tricks', result);
-
 		return NextResponse.json(result);
 	} catch (e) {
-		console.log(`GET /trick/ failed with error ${(e as Error).message}`);
+		console.error(`GET /trick/ failed with error ${(e as Error).message}`);
 		return NextResponse.error();
 	}
 }

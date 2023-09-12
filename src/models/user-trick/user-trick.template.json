@@ -1,13 +1,13 @@
 {
-	"trickName": "",
-	"userID": "",
+	"trickName": "540",
+	"userID": "bo-test-id",
 	"entryTransitions": {
 		"unified": [""],
 		"complete": [""],
-		"hyper": [""],
+		"hyper": ["semi"],
 		"semi": [""],
 		"mega": [""],
 		"turbo": [""]
 	},
-	"landingStances": [""]
+	"landingStances": ["hyper"]
 }
