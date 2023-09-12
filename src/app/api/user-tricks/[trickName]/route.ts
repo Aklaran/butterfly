@@ -3,6 +3,10 @@ import { NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import UserTrick from '@/models/user-trick/user-trick';
 import { PartialUpdate } from '@/types/partial-update';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { AdapterUser } from 'next-auth/adapters';
+import { ObjectId } from 'mongodb';
 
 const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
@@ -24,6 +28,9 @@ export async function GET(
 	{ params }: { params: { trickName: string } }
 ) {
 	const trickName = params.trickName;
+	const session = await getServerSession(authOptions);
+	const user = session?.user as AdapterUser;
+	const userID = new ObjectId(user.id);
 
 	try {
 		const client = await clientPromise;
@@ -31,7 +38,7 @@ export async function GET(
 
 		const cursor = db
 			.collection(COLLECTION)
-			.find({ userID: 'bo-test-id', trickName: trickName });
+			.find({ user: userID, trickName: trickName });
 
 		const result = [];
 
@@ -57,13 +64,16 @@ export async function PATCH(
 ) {
 	const partial: PartialUpdate = await request.json();
 	const { trickName } = params;
+	const session = await getServerSession(authOptions);
+	const user = session?.user as AdapterUser;
+	const userID = new ObjectId(user.id);
 
 	try {
 		const client = await clientPromise;
 		const db = client.db(DB);
 		const collection = db.collection(COLLECTION);
 
-		const filter = { trickName: trickName, userID: 'bo-test-id' };
+		const filter = { trickName: trickName, user: userID };
 
 		const updateDoc = {
 			$set: partial,
