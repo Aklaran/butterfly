@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 
 import clientPromise from '@/lib/mongodb';
 import UserTrick from '@/models/user-trick/user-trick';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { ObjectId } from 'mongodb';
+import { AdapterUser } from 'next-auth/adapters';
 
 const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
@@ -19,11 +23,15 @@ if (!COLLECTION) {
 }
 
 export async function GET() {
+	const session = await getServerSession(authOptions);
+	const user = session?.user as AdapterUser;
+
 	try {
 		const client = await clientPromise;
 		const db = client.db(DB);
 
-		const cursor = db.collection(COLLECTION).find({ userID: 'bo-test-id' });
+		const userID = new ObjectId(user?.id);
+		const cursor = db.collection(COLLECTION).find({ user: userID });
 
 		const result = [];
 
