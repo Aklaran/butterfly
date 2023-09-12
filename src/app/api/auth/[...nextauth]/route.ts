@@ -10,7 +10,9 @@ const handler = NextAuth({
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
 		}),
 	],
-	adapter: MongoDBAdapter(clientPromise),
+	adapter: MongoDBAdapter(clientPromise, {
+		databaseName: process.env.DB_NAME,
+	}),
 });
 
 export { handler as GET, handler as POST };
