@@ -26,6 +26,8 @@ export async function GET() {
 	const session = await getServerSession(authOptions);
 	const user = session?.user as AdapterUser;
 
+	console.info('Retrieved session information:', session);
+
 	try {
 		const client = await clientPromise;
 		const db = client.db(DB);
