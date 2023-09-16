@@ -22,9 +22,11 @@ if (!COLLECTION) {
 	);
 }
 
-export async function GET() {
+export async function GET(req: Request) {
 	const session = await getServerSession(authOptions);
 	const user = session?.user as AdapterUser;
+
+	console.info('GETUSERTRICKS called with request', req);
 
 	console.info('Retrieved session information:', session);
 
