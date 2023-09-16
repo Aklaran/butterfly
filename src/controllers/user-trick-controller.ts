@@ -23,7 +23,10 @@ export default class UserTrickController {
 	async getUserTrick(trickName: string): Promise<UserTrick> {
 		try {
 			const response = await fetch(
-				`${process.env.NEXT_PUBLIC_API_URL}/user-tricks/${trickName}`
+				`${process.env.NEXT_PUBLIC_API_URL}/user-tricks/${trickName}`,
+				{
+					credentials: 'include',
+				}
 			);
 			const result = (await response.json()) as UserTrick[];
 
