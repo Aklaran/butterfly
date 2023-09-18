@@ -8,11 +8,6 @@ export default class UserTrickController {
 	// TODO: Add userID as parameter to these functions
 
 	async getAllUserTricks() {
-		console.log('getallUserTricks, API URL:', API_URL);
-		console.log(
-			'getallUserTricks, Vercel Branch ENV Var:',
-			process.env.VERCEL_BRANCH_URL
-		);
 		try {
 			const response = await fetch(`${API_URL}/user-tricks`);
 			const result = (await response.json()) as UserTrick[];
