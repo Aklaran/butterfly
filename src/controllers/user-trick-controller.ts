@@ -23,15 +23,9 @@ export default class UserTrickController {
 		console.log(`controller getUserTrick(${trickName})`);
 		try {
 			const response = await fetch(`${API_URL}/user-tricks/${trickName}`);
-			const result = (await response.json()) as UserTrick[];
+			const result = (await response.json()) as UserTrick;
 
-			if (result.length > 1) {
-				console.warn(
-					`getUserTrick with trickName ${trickName} has more than 1 entry`
-				);
-			}
-
-			return result[0];
+			return result;
 		} catch (error) {
 			throw new Error('Error fetching user trick:', error as Error);
 		}
