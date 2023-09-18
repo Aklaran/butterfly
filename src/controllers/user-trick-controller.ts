@@ -1,3 +1,4 @@
+import { API_URL } from '@/lib/constants';
 import UserTrick from '@/models/user-trick/user-trick';
 import { PartialUpdate } from '@/types/partial-update';
 
@@ -8,7 +9,7 @@ export default class UserTrickController {
 
 	async getAllUserTricks() {
 		try {
-			const response = await fetch(`${process.env.API_URL}/user-tricks`);
+			const response = await fetch(`${API_URL}/user-tricks`);
 			const result = (await response.json()) as UserTrick[];
 
 			return result;
@@ -20,9 +21,7 @@ export default class UserTrickController {
 
 	async getUserTrick(trickName: string): Promise<UserTrick> {
 		try {
-			const response = await fetch(
-				`${process.env.API_URL}/user-tricks/${trickName}`
-			);
+			const response = await fetch(`${API_URL}/user-tricks/${trickName}`);
 			const result = (await response.json()) as UserTrick[];
 
 			if (result.length > 1) {
@@ -40,7 +39,7 @@ export default class UserTrickController {
 	async updateUserTrick(trickName: string, partial: PartialUpdate) {
 		try {
 			const response = await fetch(
-				`${process.env.API_URL}/user-tricks/${trickName}`,
+				`${API_URL}/user-tricks/${trickName}`,
 				{
 					method: 'PATCH',
 					headers: {
