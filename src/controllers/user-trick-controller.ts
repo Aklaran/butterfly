@@ -8,6 +8,8 @@ export default class UserTrickController {
 	// TODO: Add userID as parameter to these functions
 
 	async getAllUserTricks() {
+		console.log(process.env.STATIC_URL);
+		console.log(API_URL);
 		try {
 			const response = await fetch(`${API_URL}/user-tricks`);
 			const result = (await response.json()) as UserTrick[];

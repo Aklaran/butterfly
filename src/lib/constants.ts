@@ -1,6 +1,7 @@
 let url = 'http://localhost:3000/api';
 
 console.log(process.env);
+console.log(process.env.STATIC_URL);
 
 if (process.env.NEXT_PUBLIC_VERCEL_ENV == 'development') {
 	url = 'http://localhost:3000/api';
