@@ -11,6 +11,8 @@ export function middleware(request: NextRequest) {
 		},
 	});
 
+	const origin = requestHeaders.get('origin');
+
 	if (origin && allowedOriginPattern.test(origin)) {
 		response.headers.set('Access-Control-Allow-Origin', origin);
 		response.headers.set('Access-Control-Allow-Credentials', 'true');
