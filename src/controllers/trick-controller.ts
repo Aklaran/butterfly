@@ -5,12 +5,15 @@ export default class TrickController {
 	constructor() {}
 
 	async getAllTricks() {
+		console.log('controller getAllTricks');
 		try {
+			console.log('fetching from', `${API_URL}/tricks`);
+
 			const result = await fetch(`${API_URL}/tricks`).then((response) => {
 				if (!response.ok) {
 					throw new Error('Failed to fetch tricks');
 				}
-				return response.json() as unknown as Trick[];
+
 			});
 			return result;
 		} catch (error) {

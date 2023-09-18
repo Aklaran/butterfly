@@ -5,8 +5,6 @@ import { PartialUpdate } from '@/types/partial-update';
 export default class UserTrickController {
 	constructor() {}
 
-	// TODO: Add userID as parameter to these functions
-
 	async getAllUserTricks() {
 		console.log(process.env.STATIC_URL);
 		console.log(API_URL);
@@ -22,6 +20,7 @@ export default class UserTrickController {
 	}
 
 	async getUserTrick(trickName: string): Promise<UserTrick> {
+		console.log(`controller getUserTrick(${trickName})`);
 		try {
 			const response = await fetch(`${API_URL}/user-tricks/${trickName}`);
 			const result = (await response.json()) as UserTrick[];
