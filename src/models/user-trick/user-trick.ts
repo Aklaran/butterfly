@@ -12,7 +12,7 @@ export default class UserTrick {
 	static FromMongoDocument(doc: WithId<Document>): UserTrick {
 		const result = new UserTrick(
 			doc.trickName,
-			doc.userID,
+			doc.user,
 			doc.entryTransitions,
 			doc.landingStances,
 			doc._id
