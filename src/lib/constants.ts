@@ -1,5 +1,8 @@
 let url = 'http://localhost:3000/api';
 
+console.log(process.env.VERCEL_ENV);
+console.log(process.env.NEXT_PUBLIC_VERCEL_ENV);
+
 if (process.env.VERCEL_ENV == 'development') {
 	url = 'http://localhost:3000/api';
 } else if (process.env.VERCEL_ENV == 'preview') {
