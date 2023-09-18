@@ -2,9 +2,9 @@ import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 
 import TrickStanceDetail from '@/components/trick-stance-detail/trick-stance-detail';
-import TrickController from '@/controllers/trick-controller';
 
 import styles from './page.module.css';
+import { fetchTrick } from '@/services/query-service';
 
 interface TrickDetailPageProps {
 	params: ParsedUrlQuery;
@@ -13,8 +13,6 @@ interface TrickDetailPageProps {
 export default async function TrickDetailPage({
 	params,
 }: TrickDetailPageProps) {
-	const trickController = new TrickController();
-
 	const { trickName } = params;
 
 	if (typeof trickName !== 'string') {
@@ -23,11 +21,8 @@ export default async function TrickDetailPage({
 		);
 	}
 
-	const trick = (await trickController.getAllTricks()).find((trick) => {
-		return trick.name == trickName;
-	});
-
-	await trickController.getTrick(trickName);
+	const trick = await fetchTrick(trickName);
+	console.log(trick);
 
 	if (trick == undefined) {
 		throw new Error(`TrickDetailPage failed to fetch trick: ${trickName}`);

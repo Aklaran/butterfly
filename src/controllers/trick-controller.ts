@@ -14,15 +14,13 @@ export default class TrickController {
 					throw new Error('Failed to fetch tricks');
 				}
 
+				const result = response.json() as unknown as Trick[];
+				return result;
 			});
 			return result;
 		} catch (error) {
 			console.error('Error fetching tricks:', error);
 			throw error;
 		}
-	}
-
-	async getTrick(name: string) {
-		await fetch(`${API_URL}/tricks/${name}`);
 	}
 }
