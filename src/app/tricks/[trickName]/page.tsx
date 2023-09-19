@@ -3,7 +3,7 @@ import React from 'react';
 
 import TrickStanceDetail from '@/components/trick-stance-detail/trick-stance-detail';
 
-import { fetchTrick } from '@/services/query-service';
+import { fetchTrickData } from '@/services/query-service';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import Link from 'next/link';
@@ -23,7 +23,7 @@ export default async function TrickDetailPage({
 		);
 	}
 
-	const trick = await fetchTrick(trickName);
+	const trick = await fetchTrickData(trickName);
 	console.log(trick);
 
 	if (trick == undefined) {

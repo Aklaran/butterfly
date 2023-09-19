@@ -1,16 +1,20 @@
-import Trick from '../trick/trick';
-import UserTrick from '../user-trick/user-trick';
+import Trick, { TrickData } from '../trick/trick';
+import UserTrick, { UserTrickData } from '../user-trick/user-trick';
 
 export interface AnnotatedTrickData {
 	trick: Trick;
-	userTrick: UserTrick | undefined;
+	userTrick: UserTrick;
 	name: string;
 }
 
 export default class AnnotatedTrick {
 	private data: AnnotatedTrickData;
 
+	constructor(trickData: TrickData, userTrickData: UserTrickData) {
 	constructor(trick: Trick, userTrick: UserTrick | undefined) {
+
+		const trick = new Trick(trickData);
+		const userTrick = new UserTrick(userTrickData);
 		this.data = {
 			trick,
 			userTrick,

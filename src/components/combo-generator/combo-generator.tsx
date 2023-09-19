@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 
-import UserTrick from '@/models/user-trick/user-trick';
-import Trick from '@/models/trick/trick';
+import { UserTrickData } from '@/models/user-trick/user-trick';
+import { TrickData } from '@/models/trick/trick';
 import TrickAnnotationService from '@/services/trick-annotation-service';
 import generateCombos from '@/services/combo-generation-service';
 
@@ -10,8 +10,8 @@ export default function ComboGenerator({
 	tricks,
 	userTricks,
 }: {
-	tricks: Trick[];
-	userTricks: UserTrick[] | null;
+	tricks: TrickData[];
+	userTricks: UserTrickData[] | null;
 }) {
 	const annotationService = new TrickAnnotationService();
 	const annotatedTricks = annotationService.annotateTricks(

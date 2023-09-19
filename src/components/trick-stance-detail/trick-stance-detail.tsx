@@ -4,13 +4,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import UserTrickController from '@/controllers/user-trick-controller';
 import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
-import Trick from '@/models/trick/trick';
+import { TrickData } from '@/models/trick/trick';
 import TableItemGroup from '../table-item-group/table-item-group';
 import TableItem from '../table-item/table-item';
 import { PartialUpdate } from '@/types/partial-update';
 
 interface TrickStanceDetailProps {
-	baseTrick: Trick;
+	baseTrick: TrickData;
 }
 
 export default function TrickStanceDetail({

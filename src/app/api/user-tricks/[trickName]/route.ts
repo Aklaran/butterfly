@@ -31,7 +31,7 @@ export async function GET(
 	try {
 		const result = await fetchUserTrick(trickName);
 		console.log(`GET api/user-tricks/${trickName} result: `, result);
-		return NextResponse.json(result);
+		return NextResponse.json(result?.data);
 	} catch (e) {
 		console.error(
 			`GET api/user-trick/${trickName} failed with error ${
