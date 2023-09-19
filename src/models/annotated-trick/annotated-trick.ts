@@ -2,12 +2,16 @@ import Trick from '../trick/trick';
 import UserTrick from '../user-trick/user-trick';
 
 export default class AnnotatedTrick {
+	public name;
+
 	constructor(
 		public readonly trick: Trick,
 		public userTrick: UserTrick | undefined
 	) {
 		this.trick = trick;
 		this.userTrick = userTrick;
+
+		this.name = trick.name;
 	}
 
 	// INSTANCE METHODS
