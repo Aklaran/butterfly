@@ -29,7 +29,7 @@ export async function fetchAllTricks() {
 		return result;
 	} catch (e) {
 		console.error(`GET /trick/ failed with error ${(e as Error).message}`);
-		return null;
+		return [];
 	}
 }
 

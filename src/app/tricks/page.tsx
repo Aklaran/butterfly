@@ -8,9 +8,5 @@ export const dynamic = 'force-dynamic';
 export default async function TricksList() {
 	const tricks = await fetchAllTricks();
 
-	if (tricks === null) {
-		return 'Uh oh, there are no tricks...';
-	}
-
 	return <Tricktionary tricks={tricks} />;
 }
