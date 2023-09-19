@@ -21,6 +21,7 @@ export default function ComboGenerator({
 		userTricks
 	);
 
+	const [numPossibleCombos, setNumPossibleCombos] = React.useState(0);
 	const [generatedCombos, setGeneratedCombos] = React.useState<Combo[]>([]);
 	const [targetLength, setTargetLength] = React.useState(3);
 
@@ -28,6 +29,9 @@ export default function ComboGenerator({
 		e.preventDefault();
 
 		const combos = generateCombos(annotatedTricks, targetLength);
+		// TODO: inject interface ComboSelector
+		const selector = new RandomComboSelector(combos);
+		const selectedCombos = selector.take(5);
 
 		if (combos.length === 0) {
 			// TODO: Add error toast or dialog
@@ -35,7 +39,8 @@ export default function ComboGenerator({
 				'Unable to generate any combos. Try reducing the length or adding more tricks!'
 			);
 		} else {
-			setGeneratedCombos(combos);
+			setNumPossibleCombos(combos.length);
+			setGeneratedCombos(selectedCombos);
 		}
 	}
 
@@ -47,8 +52,26 @@ export default function ComboGenerator({
 				</form>
 			</div>
 			<div>
+				<h1 className='text-lg font-bold'>
+					Combos (showing 5 of {numPossibleCombos} possible)
+				</h1>
 				<DataTable columns={columns} data={generatedCombos} />
 			</div>
 		</div>
 	);
+}
+
+class RandomComboSelector {
+	constructor(public combos: Combo[]) {}
+
+	take(n: number) {
+		const randomCombos: Combo[] = Array.from({ length: n }, () =>
+			this.getRandomElement(this.combos)
+		);
+		return randomCombos;
+	}
+
+	private getRandomElement<T>(array: T[]): T {
+		return array[(Math.random() * array.length) | 0];
+	}
 }

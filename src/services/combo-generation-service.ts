@@ -22,10 +22,7 @@ export default function generateCombos(
 		`Successfully generated ${combos.length} combos!`,
 		combos.map((c) => c.toString())
 	);
-
-	// TODO: inject interface ComboSelector
-	const selector = new RandomComboSelector(combos);
-	return selector.take(5);
+	return combos;
 }
 
 function intializeCombo(trick: AnnotatedTrick, landingStance: string) {
@@ -75,20 +72,5 @@ function buildCombo(
 				}
 			}
 		}
-	}
-}
-
-class RandomComboSelector {
-	constructor(public combos: Combo[]) {}
-
-	take(n: number) {
-		const randomCombos: Combo[] = Array.from({ length: n }, () =>
-			this.getRandomElement(this.combos)
-		);
-		return randomCombos;
-	}
-
-	private getRandomElement<T>(array: T[]): T {
-		return array[(Math.random() * array.length) | 0];
 	}
 }
