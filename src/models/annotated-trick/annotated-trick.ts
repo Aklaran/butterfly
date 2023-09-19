@@ -11,8 +11,6 @@ export default class AnnotatedTrick {
 	private data: AnnotatedTrickData;
 
 	constructor(trickData: TrickData, userTrickData: UserTrickData) {
-	constructor(trick: Trick, userTrick: UserTrick | undefined) {
-
 		const trick = new Trick(trickData);
 		const userTrick = new UserTrick(userTrickData);
 		this.data = {
