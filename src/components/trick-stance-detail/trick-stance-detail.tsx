@@ -23,6 +23,22 @@ export default function TrickStanceDetail({
 	const userTrickQuery = useQuery({
 		queryKey: ['user-tricks', baseTrick.name],
 		queryFn: () => userTrickController.getUserTrick(baseTrick.name),
+		onSuccess: (data) => {
+			if (data === null) {
+				createUserTrickMutation.mutate();
+			}
+		},
+	});
+
+	const createUserTrickMutation = useMutation({
+		mutationFn: () => {
+			return userTrickController.createUserTrick(baseTrick.name);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ['user-tricks', baseTrick.name],
+			});
+		},
 	});
 
 	const userTrickMutation = useMutation<

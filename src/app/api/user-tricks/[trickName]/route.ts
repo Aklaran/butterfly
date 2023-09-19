@@ -44,6 +44,36 @@ export async function GET(
 	}
 }
 
+export async function POST(
+	request: Request,
+	{ params }: { params: { trickName: string } }
+) {
+	const { trickName } = params;
+	console.log(`POST UserTrick ${trickName}`);
+
+	const userID = await getMongoUserID();
+	console.log(`POST userID: ${userID}`);
+
+	try {
+		const client = await clientPromise;
+		const db = client.db(DB);
+		const collection = db.collection(COLLECTION);
+
+		const userTrick = UserTrick.CreateEmpty(trickName, userID);
+
+		console.log('POSTING', userTrick);
+
+		const result = await collection.insertOne(userTrick);
+		console.log('POST result', result);
+		return NextResponse.json(result);
+	} catch (e) {
+		console.error(
+			`POST /user-trick/ failed with error ${(e as Error).message}`
+		);
+		return NextResponse.error();
+	}
+}
+
 export async function PATCH(
 	request: Request,
 	{ params }: { params: { trickName: string } }

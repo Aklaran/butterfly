@@ -31,6 +31,34 @@ export default class UserTrickController {
 		}
 	}
 
+	async createUserTrick(trickName: string) {
+		console.log('creating UserTrick for', trickName);
+		try {
+			const response = await fetch(
+				`${API_URL}/user-tricks/${trickName}`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				}
+			);
+
+			if (!response.ok) {
+				const data = await response.json();
+				throw new Error(data.error || 'Something went wrong');
+			}
+
+			return;
+		} catch (error) {
+			console.error(
+				'Failed to create UserTrick:',
+				(error as Error).message
+			);
+			throw error;
+		}
+	}
+
 	async updateUserTrick(trickName: string, partial: PartialUpdate) {
 		try {
 			const response = await fetch(

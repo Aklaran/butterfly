@@ -3,10 +3,10 @@ import { Document, ObjectId, WithId } from 'mongodb';
 export default class UserTrick {
 	constructor(
 		public trickName: string,
-		public userID: string,
+		public user: ObjectId,
 		public entryTransitions: { [index: string]: string[] },
 		public landingStances: string[],
-		public _id: ObjectId
+		public _id: ObjectId | undefined
 	) {}
 
 	static FromMongoDocument(doc: WithId<Document>): UserTrick {
@@ -19,5 +19,24 @@ export default class UserTrick {
 		);
 
 		return result;
+	}
+
+	static CreateEmpty(trickName: string, userID: ObjectId) {
+		const entryTransitions = {
+			unified: [],
+			complete: [],
+			hyper: [],
+			semi: [],
+			mega: [],
+			turbo: [],
+		};
+
+		return new UserTrick(
+			trickName,
+			userID,
+			entryTransitions,
+			[],
+			undefined
+		);
 	}
 }
