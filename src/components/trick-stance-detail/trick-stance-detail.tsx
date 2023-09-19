@@ -1,11 +1,10 @@
 'use client';
 import React from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import UserTrickController from '@/controllers/user-trick-controller';
 import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
 import Trick from '@/models/trick/trick';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
 import TableItemGroup from '../table-item-group/table-item-group';
 import TableItem from '../table-item/table-item';
 import { PartialUpdate } from '@/types/partial-update';
@@ -102,6 +101,9 @@ export default function TrickStanceDetail({
 	if (userTrickQuery.isLoading) {
 		return <p>loading...</p>;
 	}
+
+	if (userTrickQuery.isError)
+		return `An error occurred: ${userTrickQuery.error}`;
 
 	const annotatedTrick = new AnnotatedTrick(baseTrick, userTrickQuery.data);
 

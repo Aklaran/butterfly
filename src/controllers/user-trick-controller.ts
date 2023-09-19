@@ -60,6 +60,11 @@ export default class UserTrickController {
 	}
 
 	async updateUserTrick(trickName: string, partial: PartialUpdate) {
+		console.log(
+			`UserTrickController.updateUserTrick(${trickName}) with partial:`,
+			partial
+		);
+
 		try {
 			const response = await fetch(
 				`${API_URL}/user-tricks/${trickName}`,

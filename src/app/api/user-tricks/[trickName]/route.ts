@@ -2,11 +2,9 @@ import { NextResponse } from 'next/server';
 
 import clientPromise from '@/lib/mongodb';
 import { PartialUpdate } from '@/types/partial-update';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { AdapterUser } from 'next-auth/adapters';
-import { ObjectId } from 'mongodb';
 import { fetchUserTrick } from '@/services/query-service';
+import { getMongoUserID } from '@/services/session-service';
+import UserTrick from '@/models/user-trick/user-trick';
 
 const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
