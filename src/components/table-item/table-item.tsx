@@ -4,13 +4,22 @@ import { Checkbox } from '../ui/checkbox';
 interface TableProps {
 	label: string;
 	isActive: boolean;
+	onActivePress?: () => void;
 }
 
-export default function TableItem({ label, isActive }: TableProps) {
+export default function TableItem({
+	label,
+	isActive,
+	onActivePress,
+}: TableProps) {
 	return (
-		<div className='flex'>
+		<div className='flex '>
 			<p>{label}</p>
-			<Checkbox aria-readonly checked={isActive} />
+			<Checkbox
+				aria-readonly
+				checked={isActive}
+				onClick={onActivePress}
+			/>
 		</div>
 	);
 }
