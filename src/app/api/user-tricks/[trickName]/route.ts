@@ -34,7 +34,7 @@ export async function GET(
 		return NextResponse.json(result);
 	} catch (e) {
 		console.error(
-			`GET /user-trick/${trickName} failed with error ${
+			`GET api/user-trick/${trickName} failed with error ${
 				(e as Error).message
 			}`
 		);

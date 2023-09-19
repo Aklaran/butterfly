@@ -1,4 +1,3 @@
-import { authOptions } from '@/lib/auth';
 import clientPromise from '@/lib/mongodb';
 import Trick from '@/models/trick/trick';
 import UserTrick from '@/models/user-trick/user-trick';

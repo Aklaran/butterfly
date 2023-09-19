@@ -5,6 +5,9 @@ import TrickStanceDetail from '@/components/trick-stance-detail/trick-stance-det
 
 import styles from './page.module.css';
 import { fetchTrick } from '@/services/query-service';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import Link from 'next/link';
 
 interface TrickDetailPageProps {
 	params: ParsedUrlQuery;
