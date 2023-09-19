@@ -19,10 +19,6 @@ export const columns: ColumnDef<Combo>[] = [
 		header: 'Combo',
 	},
 	{
-		accessorKey: 'length',
-		header: 'Length',
-	},
-	{
 		id: 'actions',
 		cell: ({ row }) => {
 			const combo = row.original;
