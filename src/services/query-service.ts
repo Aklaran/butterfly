@@ -3,6 +3,36 @@ import Trick from '@/models/trick/trick';
 import UserTrick from '@/models/user-trick/user-trick';
 import { getMongoUserID } from './session-service';
 
+export async function fetchAllTricks() {
+	console.log('fetchAllTricks()');
+
+	const DB = process.env.DB_NAME as string;
+	const COLLECTION = process.env.TRICKS_COLLECTION_NAME as string;
+
+	try {
+		const client = await clientPromise;
+		const db = client.db(DB);
+
+		const cursor = db.collection(COLLECTION).find({});
+
+		const result = [];
+
+		try {
+			for await (const doc of cursor) {
+				const trick = Trick.FromMongoDocument(doc);
+				result.push(trick);
+			}
+		} finally {
+			await cursor.close();
+		}
+
+		return result;
+	} catch (e) {
+		console.error(`GET /trick/ failed with error ${(e as Error).message}`);
+		return null;
+	}
+}
+
 export async function fetchTrick(name: string) {
 	console.log(`fetchTrick(${name})`);
 
