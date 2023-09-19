@@ -1,26 +1,16 @@
 import React from 'react';
+import { Checkbox } from '../ui/checkbox';
 
 interface TableProps {
 	label: string;
 	isActive: boolean;
-	onActivePress?: () => void;
 }
 
-export default function TableItem({
-	label,
-	isActive,
-	onActivePress,
-}: TableProps) {
+export default function TableItem({ label, isActive }: TableProps) {
 	return (
-		<>
+		<div className='flex'>
 			<p>{label}</p>
-
-			<input
-				type='checkbox'
-				readOnly
-				checked={isActive}
-				onClick={onActivePress}
-			/>
-		</>
+			<Checkbox aria-readonly checked={isActive} />
+		</div>
 	);
 }
