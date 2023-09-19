@@ -1,35 +1,29 @@
-'use client';
 import Link from 'next/link';
 import React from 'react';
 
-import UserTrickController from '@/controllers/user-trick-controller';
 import Trick from '@/models/trick/trick';
 import TrickAnnotationService from '@/services/trick-annotation-service';
-import { useQuery } from '@tanstack/react-query';
 
 import TableItem from '../table-item/table-item';
 import styles from './tricktionary.module.css';
+import { fetchAllUserTricks } from '@/services/query-service';
+
+// FIXME: Can I invalidate React Cache on a trick mutation instead?
+// FIXME: Doesn't rerender when navigating to the page with the back button
+export const dynamic = 'force-dynamic';
 
 interface TricktionaryProps {
 	tricks: Trick[];
 }
 
-export default function Tricktionary({ tricks }: TricktionaryProps) {
-	const userTrickController = new UserTrickController();
+export default async function Tricktionary({ tricks }: TricktionaryProps) {
 	const annotationService = new TrickAnnotationService();
 
-	const userTricksQuery = useQuery({
-		queryKey: ['user-tricks'],
-		queryFn: userTrickController.getAllUserTricks,
-	});
-
-	if (userTricksQuery.isLoading) {
-		console.log('hold up usertricksquery is loading, chill');
-	}
+	const userTricks = await fetchAllUserTricks();
 
 	const annotatedTricks = annotationService.annotateTricks(
 		tricks,
-		userTricksQuery.data
+		userTricks ?? null
 	);
 
 	return (

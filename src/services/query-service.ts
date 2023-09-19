@@ -3,6 +3,36 @@ import Trick from '@/models/trick/trick';
 import UserTrick from '@/models/user-trick/user-trick';
 import { getMongoUserID } from './session-service';
 
+export async function fetchAllTricks() {
+	console.log('fetchAllTricks()');
+
+	const DB = process.env.DB_NAME as string;
+	const COLLECTION = process.env.TRICKS_COLLECTION_NAME as string;
+
+	try {
+		const client = await clientPromise;
+		const db = client.db(DB);
+
+		const cursor = db.collection(COLLECTION).find({});
+
+		const result = [];
+
+		try {
+			for await (const doc of cursor) {
+				const trick = Trick.FromMongoDocument(doc);
+				result.push(trick);
+			}
+		} finally {
+			await cursor.close();
+		}
+
+		return result;
+	} catch (e) {
+		console.error(`GET /trick/ failed with error ${(e as Error).message}`);
+		return [];
+	}
+}
+
 export async function fetchTrick(name: string) {
 	console.log(`fetchTrick(${name})`);
 
@@ -27,6 +57,41 @@ export async function fetchTrick(name: string) {
 		console.error(
 			`fetchTrick(${name}) failed with error ${(e as Error).message}`
 		);
+	}
+}
+
+export async function fetchAllUserTricks() {
+	console.log('fetchAllUserTricks()');
+
+	const DB = process.env.DB_NAME as string;
+	const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
+
+	try {
+		const userObjectID = await getMongoUserID();
+
+		if (userObjectID === null) {
+			return null;
+		}
+		const client = await clientPromise;
+		const db = client.db(DB);
+
+		const cursor = db.collection(COLLECTION).find({ user: userObjectID });
+
+		const result = [];
+
+		try {
+			for await (const doc of cursor) {
+				const trick = UserTrick.FromMongoDocument(doc);
+				result.push(trick);
+			}
+		} finally {
+			cursor.close();
+		}
+
+		return result;
+	} catch (e) {
+		console.error(`GET /trick/ failed with error ${(e as Error).message}`);
+		return null;
 	}
 }
 
