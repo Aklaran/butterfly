@@ -9,7 +9,7 @@ export interface ComboStep {
 }
 
 export class Combo {
-	constructor(public data: ComboData) {}
+	constructor(public data: ComboData = { steps: [] }) {}
 
 	// GETTERS
 
@@ -25,6 +25,12 @@ export class Combo {
 		return this.data.steps.length > 0
 			? this.data.steps[this.data.steps.length - 1].exitStance
 			: null;
+	}
+
+	// CLASS METHODS
+
+	static FromSteps(steps: ComboStep[]): Combo {
+		return new Combo({ steps: [...steps] });
 	}
 
 	// INSTANCE METHODS
