@@ -5,7 +5,7 @@ import { UserTrickData } from '@/models/user-trick/user-trick';
 import { TrickData } from '@/models/trick/trick';
 import TrickAnnotationService from '@/services/trick-annotation-service';
 import generateCombos, { Combo } from '@/services/combo-generation-service';
-import { DataTable } from '@/components/ui/data-table/data-table';
+import { DataTable } from '@/components/ui/data-table';
 import { columns } from '@/app/combo-gen/columns';
 
 export default function ComboGenerator({
