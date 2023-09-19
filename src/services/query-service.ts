@@ -60,6 +60,41 @@ export async function fetchTrick(name: string) {
 	}
 }
 
+export async function fetchAllUserTricks() {
+	console.log('fetchAllUserTricks()');
+
+	const DB = process.env.DB_NAME as string;
+	const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
+
+	try {
+		const userObjectID = await getMongoUserID();
+
+		if (userObjectID === null) {
+			return null;
+		}
+		const client = await clientPromise;
+		const db = client.db(DB);
+
+		const cursor = db.collection(COLLECTION).find({ user: userObjectID });
+
+		const result = [];
+
+		try {
+			for await (const doc of cursor) {
+				const trick = UserTrick.FromMongoDocument(doc);
+				result.push(trick);
+			}
+		} finally {
+			cursor.close();
+		}
+
+		return result;
+	} catch (e) {
+		console.error(`GET /trick/ failed with error ${(e as Error).message}`);
+		return null;
+	}
+}
+
 export async function fetchUserTrick(trickName: string) {
 	console.log(`fetchUserTrick(${trickName})`);
 
