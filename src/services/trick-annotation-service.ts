@@ -7,7 +7,7 @@ export default class TrickAnnotationService {
 
 	annotateTricks(
 		tricks: Trick[],
-		userTricks: UserTrick[] | undefined
+		userTricks: UserTrick[] | null
 	): AnnotatedTrick[] {
 		const result = tricks.map((trick) => {
 			const userTrick = userTricks?.find(

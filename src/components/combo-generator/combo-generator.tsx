@@ -11,7 +11,7 @@ export default function ComboGenerator({
 	userTricks,
 }: {
 	tricks: Trick[];
-	userTricks: UserTrick[] | undefined;
+	userTricks: UserTrick[] | null;
 }) {
 	const annotationService = new TrickAnnotationService();
 	const annotatedTricks = annotationService.annotateTricks(

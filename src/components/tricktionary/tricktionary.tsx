@@ -23,7 +23,7 @@ export default async function Tricktionary({ tricks }: TricktionaryProps) {
 
 	const annotatedTricks = annotationService.annotateTricks(
 		tricks,
-		userTricks ?? undefined
+		userTricks ?? null
 	);
 
 	return (
