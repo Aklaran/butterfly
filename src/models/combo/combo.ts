@@ -27,6 +27,10 @@ export class Combo {
 			: null;
 	}
 
+	get text() {
+		return this.toString();
+	}
+
 	// CLASS METHODS
 
 	static FromSteps(steps: ComboStep[]): Combo {

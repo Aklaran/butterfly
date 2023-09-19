@@ -13,7 +13,7 @@ export default function TableItem({
 	onActivePress,
 }: TableProps) {
 	return (
-		<div className='flex '>
+		<div className='flex justify-between'>
 			<p>{label}</p>
 			<Checkbox
 				aria-readonly
