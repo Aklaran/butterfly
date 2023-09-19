@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 
-import styles from './header.module.css';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
@@ -9,11 +8,9 @@ export default async function Header() {
 	const session = await getServerSession(authOptions);
 
 	return (
-		<header className={styles.header}>
+		<header>
 			<h1>
-				<Link href='/' className={styles.homeLink}>
-					TRICKIDEX
-				</Link>
+				<Link href='/'>TRICKIDEX</Link>
 			</h1>
 			{session ? (
 				<>

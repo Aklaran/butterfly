@@ -5,7 +5,6 @@ import Trick from '@/models/trick/trick';
 import TrickAnnotationService from '@/services/trick-annotation-service';
 
 import TableItem from '../table-item/table-item';
-import styles from './tricktionary.module.css';
 import { fetchAllUserTricks } from '@/services/query-service';
 
 // FIXME: Can I invalidate React Cache on a trick mutation instead?
@@ -29,7 +28,7 @@ export default async function Tricktionary({ tricks }: TricktionaryProps) {
 	return (
 		<div>
 			<h1>THE BIG LIST</h1>
-			<ul className={styles.wrapper}>
+			<ul>
 				{annotatedTricks.map((trick) => (
 					<Link
 						key={trick.trick.name}

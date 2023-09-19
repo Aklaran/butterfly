@@ -3,7 +3,6 @@ import React from 'react';
 
 import TrickStanceDetail from '@/components/trick-stance-detail/trick-stance-detail';
 
-import styles from './page.module.css';
 import { fetchTrick } from '@/services/query-service';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
@@ -34,7 +33,7 @@ export default async function TrickDetailPage({
 	const session = await getServerSession(authOptions);
 
 	return (
-		<div className={styles.wrapper}>
+		<div>
 			<h1>{trick.name}</h1>
 			<p>Someday a description of the trick will live here</p>
 			{session ? (
