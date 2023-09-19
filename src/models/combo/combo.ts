@@ -41,13 +41,10 @@ export class Combo {
 
 	addStep(step: ComboStep) {
 		this.data.steps.push(step);
-		console.log(this.data.steps);
-		console.log(this.length);
 	}
 
 	removeLastStep() {
 		this.data.steps.pop();
-		console.log('After backtracking:', this.data.steps);
 	}
 
 	toString() {

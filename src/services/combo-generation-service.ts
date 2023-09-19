@@ -51,7 +51,6 @@ function buildCombo(
 		return;
 	}
 	if (depth === length) {
-		console.log(`Completed combo: ${currentCombo.toString()}`);
 		combos.push(Combo.FromSteps([...currentCombo.steps])); // shallow clone
 		return;
 	}
