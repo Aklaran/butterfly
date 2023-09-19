@@ -7,7 +7,8 @@ export default function generateCombos(
 	const activeTricks = tricks.filter((t) => t.isActive());
 	const combos: Combo[] = [];
 
-	// TODO: Don't use ! for all UserTricks here
+	console.time('Combo Generation'); // log exec time
+
 	for (const trick of activeTricks) {
 		for (const landingStance of trick.userTrick!.landingStances) {
 			const firstStep = new ComboStep(trick.name, 'start', landingStance);
@@ -16,11 +17,15 @@ export default function generateCombos(
 		}
 	}
 
+	console.timeEnd('Combo Generation'); // log exec time
 	console.log(
 		`Successfully generated ${combos.length} combos!`,
 		combos.map((c) => c.toString())
 	);
-	return combos;
+
+	// TODO: inject interface ComboSelector
+	const selector = new RandomComboSelector(combos);
+	return selector.take(5);
 }
 
 function buildCombo(
@@ -65,9 +70,20 @@ function buildCombo(
 	}
 }
 
-// function getRandomElement<T>(array: T[]): T {
-// 	return array[(Math.random() * array.length) | 0];
-// }
+class RandomComboSelector {
+	constructor(public combos: Combo[]) {}
+
+	take(n: number) {
+		const randomCombos: Combo[] = Array.from({ length: n }, () =>
+			this.getRandomElement(this.combos)
+		);
+		return randomCombos;
+	}
+
+	private getRandomElement<T>(array: T[]): T {
+		return array[(Math.random() * array.length) | 0];
+	}
+}
 
 export class Combo {
 	constructor(public steps: ComboStep[]) {}
