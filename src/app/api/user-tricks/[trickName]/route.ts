@@ -50,9 +50,8 @@ export async function PATCH(
 ) {
 	const partial: PartialUpdate = await request.json();
 	const { trickName } = params;
-	const session = await getServerSession(authOptions);
-	const user = session?.user as AdapterUser;
-	const userID = new ObjectId(user.id);
+
+	const userID = await getMongoUserID();
 
 	try {
 		const client = await clientPromise;
