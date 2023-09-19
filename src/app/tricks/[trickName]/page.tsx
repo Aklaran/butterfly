@@ -2,9 +2,12 @@ import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 
 import TrickStanceDetail from '@/components/trick-stance-detail/trick-stance-detail';
-import TrickController from '@/controllers/trick-controller';
 
 import styles from './page.module.css';
+import { fetchTrick } from '@/services/query-service';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import Link from 'next/link';
 
 interface TrickDetailPageProps {
 	params: ParsedUrlQuery;
@@ -13,8 +16,6 @@ interface TrickDetailPageProps {
 export default async function TrickDetailPage({
 	params,
 }: TrickDetailPageProps) {
-	const trickController = new TrickController();
-
 	const { trickName } = params;
 
 	if (typeof trickName !== 'string') {
@@ -23,21 +24,26 @@ export default async function TrickDetailPage({
 		);
 	}
 
-	const trick = (await trickController.getAllTricks()).find((trick) => {
-		return trick.name == trickName;
-	});
-
-	await trickController.getTrick(trickName);
+	const trick = await fetchTrick(trickName);
+	console.log(trick);
 
 	if (trick == undefined) {
 		throw new Error(`TrickDetailPage failed to fetch trick: ${trickName}`);
 	}
 
+	const session = await getServerSession(authOptions);
+
 	return (
 		<div className={styles.wrapper}>
 			<h1>{trick.name}</h1>
 			<p>Someday a description of the trick will live here</p>
-			<TrickStanceDetail baseTrick={trick} />
+			{session ? (
+				<TrickStanceDetail baseTrick={trick} />
+			) : (
+				<Link href={'/api/auth/signin'}>
+					Sign in to claim this trick!
+				</Link>
+			)}
 		</div>
 	);
 }

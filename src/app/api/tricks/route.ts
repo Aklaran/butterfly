@@ -19,6 +19,7 @@ if (!COLLECTION) {
 }
 
 export async function GET() {
+	console.log('api/tricks GET');
 	try {
 		const client = await clientPromise;
 		const db = client.db(DB);

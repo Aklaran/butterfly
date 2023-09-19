@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
 
 import clientPromise from '@/lib/mongodb';
-import UserTrick from '@/models/user-trick/user-trick';
 import { PartialUpdate } from '@/types/partial-update';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { AdapterUser } from 'next-auth/adapters';
-import { ObjectId } from 'mongodb';
+import { fetchUserTrick } from '@/services/query-service';
+import { getMongoUserID } from '@/services/session-service';
+import UserTrick from '@/models/user-trick/user-trick';
 
 const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
@@ -28,32 +26,52 @@ export async function GET(
 	{ params }: { params: { trickName: string } }
 ) {
 	const trickName = params.trickName;
-	const session = await getServerSession(authOptions);
-	const user = session?.user as AdapterUser;
-	const userID = new ObjectId(user.id);
+	console.log(`GET api/user-tricks/${trickName}`);
 
 	try {
-		const client = await clientPromise;
-		const db = client.db(DB);
-
-		const cursor = db
-			.collection(COLLECTION)
-			.find({ user: userID, trickName: trickName });
-
-		const result = [];
-
-		try {
-			for await (const doc of cursor) {
-				const trick = UserTrick.FromMongoDocument(doc);
-				result.push(trick);
-			}
-		} finally {
-			cursor.close();
-		}
-
+		const result = await fetchUserTrick(trickName);
+		console.log(`GET api/user-tricks/${trickName} result: `, result);
 		return NextResponse.json(result);
 	} catch (e) {
-		console.error(`GET /trick/ failed with error ${(e as Error).message}`);
+		console.error(
+			`GET api/user-trick/${trickName} failed with error ${
+				(e as Error).message
+			}`
+		);
+		return NextResponse.json({});
+	}
+}
+
+export async function POST(
+	request: Request,
+	{ params }: { params: { trickName: string } }
+) {
+	const { trickName } = params;
+	console.log(`POST UserTrick ${trickName}`);
+
+	try {
+		const userID = await getMongoUserID();
+		if (userID === null) {
+			console.warn('POST /user-trick/ aborting: no session');
+			return NextResponse.json({});
+		}
+		console.log(`POST userID: ${userID}`);
+
+		const client = await clientPromise;
+		const db = client.db(DB);
+		const collection = db.collection(COLLECTION);
+
+		const userTrick = UserTrick.CreateEmpty(trickName, userID);
+
+		console.log('POSTING', userTrick);
+
+		const result = await collection.insertOne(userTrick);
+		console.log('POST result', result);
+		return NextResponse.json(result);
+	} catch (e) {
+		console.error(
+			`POST /user-trick/ failed with error ${(e as Error).message}`
+		);
 		return NextResponse.error();
 	}
 }
@@ -64,9 +82,8 @@ export async function PATCH(
 ) {
 	const partial: PartialUpdate = await request.json();
 	const { trickName } = params;
-	const session = await getServerSession(authOptions);
-	const user = session?.user as AdapterUser;
-	const userID = new ObjectId(user.id);
+
+	const userID = await getMongoUserID();
 
 	try {
 		const client = await clientPromise;
