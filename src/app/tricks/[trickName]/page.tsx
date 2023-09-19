@@ -28,11 +28,19 @@ export default async function TrickDetailPage({
 		throw new Error(`TrickDetailPage failed to fetch trick: ${trickName}`);
 	}
 
+	const session = await getServerSession(authOptions);
+
 	return (
 		<div className={styles.wrapper}>
 			<h1>{trick.name}</h1>
 			<p>Someday a description of the trick will live here</p>
-			<TrickStanceDetail baseTrick={trick} />
+			{session ? (
+				<TrickStanceDetail baseTrick={trick} />
+			) : (
+				<Link href={'/api/auth/signin'}>
+					Sign in to claim this trick!
+				</Link>
+			)}
 		</div>
 	);
 }

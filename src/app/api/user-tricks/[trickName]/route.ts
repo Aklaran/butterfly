@@ -49,10 +49,14 @@ export async function POST(
 	const { trickName } = params;
 	console.log(`POST UserTrick ${trickName}`);
 
-	const userID = await getMongoUserID();
-	console.log(`POST userID: ${userID}`);
-
 	try {
+		const userID = await getMongoUserID();
+		if (userID === null) {
+			console.warn('POST /user-trick/ aborting: no session');
+			return NextResponse.json({});
+		}
+		console.log(`POST userID: ${userID}`);
+
 		const client = await clientPromise;
 		const db = client.db(DB);
 		const collection = db.collection(COLLECTION);

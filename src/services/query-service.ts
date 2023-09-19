@@ -2,9 +2,7 @@ import { authOptions } from '@/lib/auth';
 import clientPromise from '@/lib/mongodb';
 import Trick from '@/models/trick/trick';
 import UserTrick from '@/models/user-trick/user-trick';
-import { ObjectId } from 'mongodb';
-import { getServerSession } from 'next-auth';
-import { AdapterUser } from 'next-auth/adapters';
+import { getMongoUserID } from './session-service';
 
 export async function fetchTrick(name: string) {
 	console.log(`fetchTrick(${name})`);
@@ -39,11 +37,13 @@ export async function fetchUserTrick(trickName: string) {
 	const DB = process.env.DB_NAME as string;
 	const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
 
-	const session = await getServerSession(authOptions);
-	const user = session?.user as AdapterUser;
-	const userObjectID = new ObjectId(user.id);
-
 	try {
+		const userObjectID = await getMongoUserID();
+
+		if (userObjectID === null) {
+			return null;
+		}
+
 		const client = await clientPromise;
 		const db = client.db(DB);
 
