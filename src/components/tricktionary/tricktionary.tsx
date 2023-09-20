@@ -25,7 +25,7 @@ export default function Tricktionary({
 
 	return (
 		<div>
-			<h1>THE BIG LIST</h1>
+			<h1 className='font-bold text-lg p-2 text-center'>Tricks</h1>
 			<DataTable columns={columns} data={annotatedTricks} />
 		</div>
 	);
