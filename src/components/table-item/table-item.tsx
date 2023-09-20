@@ -1,4 +1,5 @@
 import React from 'react';
+import { Switch } from '../ui/switch';
 
 interface TableProps {
 	label: string;
@@ -12,15 +13,9 @@ export default function TableItem({
 	onActivePress,
 }: TableProps) {
 	return (
-		<>
+		<div className='flex justify-between'>
 			<p>{label}</p>
-
-			<input
-				type='checkbox'
-				readOnly
-				checked={isActive}
-				onClick={onActivePress}
-			/>
-		</>
+			<Switch onClick={onActivePress} checked={isActive} />
+		</div>
 	);
 }

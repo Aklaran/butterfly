@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TableItem from '../table-item/table-item';
+import { DropdownMenuSeparator } from '../ui/dropdown-menu';
 
 interface TableProps {
 	header: string;
@@ -17,7 +18,7 @@ export default function TableItemGroup({
 }: TableProps) {
 	return (
 		<>
-			<h3>{header}</h3>
+			<h3 className='text-center font-bold text-m'>{header}</h3>
 			{items.map((item) => (
 				<TableItem
 					key={item}
@@ -28,6 +29,7 @@ export default function TableItemGroup({
 					}
 				/>
 			))}
+			<DropdownMenuSeparator className='last:hidden' />
 		</>
 	);
 }

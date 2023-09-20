@@ -1,17 +1,46 @@
-import Trick from '../trick/trick';
-import UserTrick from '../user-trick/user-trick';
+import Trick, { TrickData } from '../trick/trick';
+import UserTrick, { UserTrickData } from '../user-trick/user-trick';
+
+export interface AnnotatedTrickData {
+	trick: Trick;
+	userTrick: UserTrick;
+	name: string;
+}
 
 export default class AnnotatedTrick {
-	public name;
+	private _data: AnnotatedTrickData;
 
-	constructor(
-		public readonly trick: Trick,
-		public userTrick: UserTrick | undefined
-	) {
-		this.trick = trick;
-		this.userTrick = userTrick;
+	constructor(trickData: TrickData, userTrickData: UserTrickData) {
+		const trick = new Trick(trickData);
+		const userTrick = new UserTrick(userTrickData);
+		this._data = {
+			trick,
+			userTrick,
+			name: trick.name,
+		};
+	}
 
-		this.name = trick.name;
+	// GETTERS
+
+	get data() {
+		return this._data;
+	}
+
+	get trick() {
+		return this._data.trick;
+	}
+
+	get userTrick() {
+		return this._data.userTrick;
+	}
+
+	get name() {
+		return this._data.name;
+	}
+
+	// CLASS METHODS
+	static fromData(data: AnnotatedTrickData) {
+		return new AnnotatedTrick(data.trick.data, data.userTrick.data);
 	}
 
 	// INSTANCE METHODS

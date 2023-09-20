@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 
-import styles from './page.module.css';
-
 export default function Home() {
 	const pages = [
 		{
@@ -20,16 +18,12 @@ export default function Home() {
 	];
 
 	return (
-		<div className={styles.wrapper}>
-			<ul className={styles.navList}>
-				{pages.map(({ label, route }) => (
-					<li key={route} className={styles.navItem}>
-						<Link href={route} className={styles.link}>
-							{label}
-						</Link>
-					</li>
-				))}
-			</ul>
-		</div>
+		<ul className='h-[80%] flex flex-col justify-center gap-8 items-center'>
+			{pages.map(({ label, route }) => (
+				<li key={route}>
+					<Link href={route}>{label}</Link>
+				</li>
+			))}
+		</ul>
 	);
 }

@@ -1,5 +1,5 @@
 import { API_URL } from '@/lib/constants';
-import UserTrick from '@/models/user-trick/user-trick';
+import { UserTrickData } from '@/models/user-trick/user-trick';
 import { PartialUpdate } from '@/types/partial-update';
 
 export default class UserTrickController {
@@ -10,7 +10,7 @@ export default class UserTrickController {
 		console.log(API_URL);
 		try {
 			const response = await fetch(`${API_URL}/user-tricks`);
-			const result = (await response.json()) as UserTrick[];
+			const result = (await response.json()) as UserTrickData[];
 
 			return result;
 		} catch (error) {
@@ -19,11 +19,11 @@ export default class UserTrickController {
 		}
 	}
 
-	async getUserTrick(trickName: string): Promise<UserTrick> {
+	async getUserTrick(trickName: string): Promise<UserTrickData> {
 		console.log(`controller getUserTrick(${trickName})`);
 		try {
 			const response = await fetch(`${API_URL}/user-tricks/${trickName}`);
-			const result = (await response.json()) as UserTrick;
+			const result = (await response.json()) as UserTrickData;
 
 			return result;
 		} catch (error) {

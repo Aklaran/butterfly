@@ -3,7 +3,7 @@ import Trick from '@/models/trick/trick';
 import UserTrick from '@/models/user-trick/user-trick';
 import { getMongoUserID } from './session-service';
 
-export async function fetchAllTricks() {
+export async function fetchAllTrickData() {
 	console.log('fetchAllTricks()');
 
 	const DB = process.env.DB_NAME as string;
@@ -20,7 +20,7 @@ export async function fetchAllTricks() {
 		try {
 			for await (const doc of cursor) {
 				const trick = Trick.FromMongoDocument(doc);
-				result.push(trick);
+				result.push(trick.data);
 			}
 		} finally {
 			await cursor.close();
@@ -33,7 +33,7 @@ export async function fetchAllTricks() {
 	}
 }
 
-export async function fetchTrick(name: string) {
+export async function fetchTrickData(name: string) {
 	console.log(`fetchTrick(${name})`);
 
 	const DB = process.env.DB_NAME as string;
@@ -52,7 +52,7 @@ export async function fetchTrick(name: string) {
 		}
 
 		const result = Trick.FromMongoDocument(queryResult);
-		return result;
+		return result.data;
 	} catch (e) {
 		console.error(
 			`fetchTrick(${name}) failed with error ${(e as Error).message}`
@@ -60,7 +60,7 @@ export async function fetchTrick(name: string) {
 	}
 }
 
-export async function fetchAllUserTricks() {
+export async function fetchAllUserTrickData() {
 	console.log('fetchAllUserTricks()');
 
 	const DB = process.env.DB_NAME as string;
@@ -82,7 +82,7 @@ export async function fetchAllUserTricks() {
 		try {
 			for await (const doc of cursor) {
 				const trick = UserTrick.FromMongoDocument(doc);
-				result.push(trick);
+				result.push(trick.data);
 			}
 		} finally {
 			cursor.close();

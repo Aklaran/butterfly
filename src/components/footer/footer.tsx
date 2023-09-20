@@ -3,22 +3,15 @@ import React from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import styles from './footer.module.css';
-
 const queryClient = new QueryClient();
 
 export default function Footer() {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<footer className={styles.footer}>
-				<p className={styles.text}>
+			<footer className='mt-auto bg-primary h-[30px] text-primary-foreground flex justify-center'>
+				<p>
 					Created by{' '}
-					<a
-						className={styles.link}
-						href='https://github.com/aklaran'
-					>
-						Bo Tembunkiart
-					</a>
+					<a href='https://instagram.com/botbunk'>Bo Tembunkiart</a>
 				</p>
 			</footer>
 		</QueryClientProvider>

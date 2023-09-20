@@ -4,13 +4,19 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import UserTrickController from '@/controllers/user-trick-controller';
 import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
-import Trick from '@/models/trick/trick';
+import { TrickData } from '@/models/trick/trick';
 import TableItemGroup from '../table-item-group/table-item-group';
 import TableItem from '../table-item/table-item';
 import { PartialUpdate } from '@/types/partial-update';
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from '@/components/ui/accordion';
 
 interface TrickStanceDetailProps {
-	baseTrick: Trick;
+	baseTrick: TrickData;
 }
 
 export default function TrickStanceDetail({
@@ -108,60 +114,71 @@ export default function TrickStanceDetail({
 	const annotatedTrick = new AnnotatedTrick(baseTrick, userTrickQuery.data);
 
 	return (
-		<div>
-			<h2>landing stances:</h2>
-			<ul>
-				{annotatedTrick.trick.landingStances.map((stance) => (
-					<li key={stance}>
-						<TableItem
-							label={stance}
-							isActive={annotatedTrick.isLandingStanceActive(
-								stance
-							)}
-							onActivePress={() =>
-								handleLandingStanceUpdate(
-									stance,
-									annotatedTrick.userTrick!.landingStances,
-									!annotatedTrick.isLandingStanceActive(
-										stance
-									)
+		<div className='flex justify-center'>
+			<Accordion type='multiple' className='w-[200px]'>
+				<AccordionItem value='landing-stances'>
+					<AccordionTrigger>Landing Stances:</AccordionTrigger>
+					<AccordionContent>
+						<ul>
+							{annotatedTrick.trick.landingStances.map(
+								(stance) => (
+									<li className='py-1' key={stance}>
+										<TableItem
+											label={stance}
+											isActive={annotatedTrick.isLandingStanceActive(
+												stance
+											)}
+											onActivePress={() =>
+												handleLandingStanceUpdate(
+													stance,
+													annotatedTrick.userTrick!
+														.landingStances,
+													!annotatedTrick.isLandingStanceActive(
+														stance
+													)
+												)
+											}
+										/>
+									</li>
 								)
-							}
-						/>
-					</li>
-				))}
-			</ul>
-			<h2>entry transitions:</h2>
-			<div>
-				{Object.keys(annotatedTrick.trick.entryTransitions).map(
-					(stance) => {
-						return (
-							<TableItemGroup
-								key={stance}
-								header={stance}
-								items={
-									annotatedTrick.trick.entryTransitions[
-										stance
-									]
-								}
-								isItemActive={
-									annotatedTrick.isEntryTransitionActive
-								}
-								toggleItem={(transition, isActive) =>
-									handleEntryTransitionUpdate(
-										stance,
-										transition,
-										annotatedTrick.trick.entryTransitions[
-											stance
-										],
-										isActive
-									)
-								}
-							/>
-						);
-					}
-				)}
-			</div>
+							)}
+						</ul>
+					</AccordionContent>
+				</AccordionItem>
+				<AccordionItem value='entry-transitions'>
+					<AccordionTrigger>Entry Transitions:</AccordionTrigger>
+					<AccordionContent>
+						<div>
+							{Object.keys(
+								annotatedTrick.trick.entryTransitions
+							).map((stance) => {
+								return (
+									<TableItemGroup
+										key={stance}
+										header={stance}
+										items={
+											annotatedTrick.trick
+												.entryTransitions[stance]
+										}
+										isItemActive={
+											annotatedTrick.isEntryTransitionActive
+										}
+										toggleItem={(transition, isActive) =>
+											handleEntryTransitionUpdate(
+												stance,
+												transition,
+												annotatedTrick.trick
+													.entryTransitions[stance],
+												isActive
+											)
+										}
+									/>
+								);
+							})}
+						</div>
+					</AccordionContent>
+				</AccordionItem>
+			</Accordion>
 		</div>
 	);
 }
