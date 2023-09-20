@@ -33,9 +33,12 @@ export default async function TrickDetailPage({
 	const session = await getServerSession(authOptions);
 
 	return (
-		<div>
-			<h1>{trick.name}</h1>
-			<p>Someday a description of the trick will live here</p>
+		<div className='px-1'>
+			<h1 className='text-lg font-bold text-center p-1'>{trick.name}</h1>
+			<p className='text-center'>
+				Select at least 1 Landing Stance and 1 Entry Transition to make
+				this trick active.
+			</p>
 			{session ? (
 				<TrickStanceDetail baseTrick={trick} />
 			) : (
