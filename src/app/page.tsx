@@ -18,14 +18,12 @@ export default function Home() {
 	];
 
 	return (
-		<div className='h-[100%] flex justify-center'>
-			<ul className='flex flex-col justify-center gap-8 items-center'>
-				{pages.map(({ label, route }) => (
-					<li key={route}>
-						<Link href={route}>{label}</Link>
-					</li>
-				))}
-			</ul>
-		</div>
+		<ul className='h-[80%] flex flex-col justify-center gap-8 items-center'>
+			{pages.map(({ label, route }) => (
+				<li key={route}>
+					<Link href={route}>{label}</Link>
+				</li>
+			))}
+		</ul>
 	);
 }
