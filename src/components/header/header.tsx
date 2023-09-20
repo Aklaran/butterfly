@@ -12,16 +12,18 @@ export default async function Header() {
 			<h1 className='text-primary-foreground text-lg font-bold'>
 				<Link href='/'>BUTTERFLY</Link>
 			</h1>
-			{session ? (
-				<div className='text-primary-foreground text-center'>
-					<p>Hello {session.user?.name}!</p>
-					<Link className='color-gray' href={'/api/auth/signout'}>
-						Log Out
-					</Link>
-				</div>
-			) : (
-				<Link href={'/api/auth/signin'}>Sign in</Link>
-			)}
+			<div className='text-primary-foreground text-center'>
+				{session ? (
+					<>
+						<p>Hello {session.user?.name}!</p>
+						<Link className='color-gray' href={'/api/auth/signout'}>
+							Log Out
+						</Link>
+					</>
+				) : (
+					<Link href={'/api/auth/signin'}>Sign in</Link>
+				)}
+			</div>
 		</header>
 	);
 }
