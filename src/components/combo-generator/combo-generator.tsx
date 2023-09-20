@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 
-import { UserTrickData } from '@/models/user-trick/user-trick';
+import UserTrickData from '@/models/user-trick/user-trick-data';
 import { TrickData } from '@/models/trick/trick';
 import TrickAnnotationService from '@/services/trick-annotation-service';
 import generateCombos from '@/services/combo-generation-service';

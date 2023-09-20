@@ -4,7 +4,7 @@ import clientPromise from '@/lib/mongodb';
 import { PartialUpdate } from '@/types/partial-update';
 import { fetchUserTrick } from '@/services/query-service';
 import { getMongoUserID } from '@/services/session-service';
-import UserTrick from '@/models/user-trick/user-trick';
+import UserTrickFactory from '@/models/user-trick/user-trick-factory';
 
 const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
@@ -31,7 +31,7 @@ export async function GET(
 	try {
 		const result = await fetchUserTrick(trickName);
 		console.log(`GET api/user-tricks/${trickName} result: `, result);
-		return NextResponse.json(result?.data);
+		return NextResponse.json(result);
 	} catch (e) {
 		console.error(
 			`GET api/user-trick/${trickName} failed with error ${
@@ -61,7 +61,7 @@ export async function POST(
 		const db = client.db(DB);
 		const collection = db.collection(COLLECTION);
 
-		const userTrick = UserTrick.CreateEmpty(trickName, userID);
+		const userTrick = UserTrickFactory.CreateEmpty(trickName, userID);
 
 		console.log('POSTING', userTrick);
 

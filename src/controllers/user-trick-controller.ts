@@ -1,5 +1,5 @@
 import { API_URL } from '@/lib/constants';
-import { UserTrickData } from '@/models/user-trick/user-trick';
+import UserTrickData from '@/models/user-trick/user-trick-data';
 import { PartialUpdate } from '@/types/partial-update';
 
 export default class UserTrickController {
