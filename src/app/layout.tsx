@@ -1,7 +1,6 @@
 import '@/css/reset.css';
 import '@/css/global-styles.css';
 
-import { Inter } from 'next/font/google';
 import React from 'react';
 
 import Footer from '@/components/footer/footer';
@@ -10,7 +9,6 @@ import { QueryProvider } from '@/components/providers/query-provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import type { Metadata } from 'next';
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: 'Trickidex',
