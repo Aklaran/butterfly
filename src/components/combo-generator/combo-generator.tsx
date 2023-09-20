@@ -4,9 +4,10 @@ import React from 'react';
 import { UserTrickData } from '@/models/user-trick/user-trick';
 import { TrickData } from '@/models/trick/trick';
 import TrickAnnotationService from '@/services/trick-annotation-service';
-import generateCombos, { Combo } from '@/services/combo-generation-service';
+import generateCombos from '@/services/combo-generation-service';
 import { DataTable } from '@/components/ui/data-table';
-import { columns } from '@/app/combo-gen/columns';
+import { columns } from '@/components/combo-generator/columns';
+import { Combo } from '@/models/combo/combo';
 
 export default function ComboGenerator({
 	tricks,
