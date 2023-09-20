@@ -8,12 +8,12 @@ export interface AnnotatedTrickData {
 }
 
 export default class AnnotatedTrick {
-	private data: AnnotatedTrickData;
+	private _data: AnnotatedTrickData;
 
 	constructor(trickData: TrickData, userTrickData: UserTrickData) {
 		const trick = new Trick(trickData);
 		const userTrick = new UserTrick(userTrickData);
-		this.data = {
+		this._data = {
 			trick,
 			userTrick,
 			name: trick.name,
@@ -22,16 +22,25 @@ export default class AnnotatedTrick {
 
 	// GETTERS
 
+	get data() {
+		return this._data;
+	}
+
 	get trick() {
-		return this.data.trick;
+		return this._data.trick;
 	}
 
 	get userTrick() {
-		return this.data.userTrick;
+		return this._data.userTrick;
 	}
 
 	get name() {
-		return this.data.name;
+		return this._data.name;
+	}
+
+	// CLASS METHODS
+	static fromData(data: AnnotatedTrickData) {
+		return new AnnotatedTrick(data.trick.data, data.userTrick.data);
 	}
 
 	// INSTANCE METHODS

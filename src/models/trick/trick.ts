@@ -22,11 +22,45 @@ export default class Trick {
 	get name() {
 		return this.data.name;
 	}
+
 	get entryTransitions() {
 		return this.data.entryTransitions;
 	}
+
 	get landingStances() {
 		return this.data.landingStances;
+	}
+
+	get defaultLandingStance() {
+		return this.data.defaultLandingStance;
+	}
+
+	get _id() {
+		return this.data._id;
+	}
+
+	get numberOfFlips() {
+		return this.data.numberOfFlips;
+	}
+
+	get numberOfKicks() {
+		return this.data.numberOfKicks;
+	}
+
+	get degreesOfRotation() {
+		return this.data.degreesOfRotation;
+	}
+
+	get axis() {
+		return this.data.axis;
+	}
+
+	get variation() {
+		return this.data.variation;
+	}
+
+	get aliases() {
+		return this.data.aliases;
 	}
 
 	// CLASS METHODS
