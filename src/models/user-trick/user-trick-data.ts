@@ -1,10 +1,8 @@
-import { ObjectId } from 'mongodb';
-
 export default interface UserTrickData {
 	trickName: string;
-	user: ObjectId;
+	user: string;
 	entryTransitions: { [index: string]: string[] };
 	landingStances: string[];
-	_id?: ObjectId;
+	_id?: string;
 	// eslint-disable-next-line semi
 }

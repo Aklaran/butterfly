@@ -56,16 +56,19 @@ export async function POST(
 			return NextResponse.json({});
 		}
 		console.log(`POST userID: ${userID}`);
+		const userIDString = userID.toString();
 
 		const client = await clientPromise;
 		const db = client.db(DB);
 		const collection = db.collection(COLLECTION);
 
-		const userTrick = UserTrickFactory.CreateEmpty(trickName, userID);
-
+		const userTrick = UserTrickFactory.CreateEmpty(trickName, userIDString);
 		console.log('POSTING', userTrick);
 
-		const result = await collection.insertOne(userTrick);
+		const result = await collection.insertOne(
+			UserTrickFactory.ToMongoDocument(userTrick)
+		);
+
 		console.log('POST result', result);
 		return NextResponse.json(result);
 	} catch (e) {

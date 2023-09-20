@@ -7,15 +7,26 @@ export default class UserTrickFactory {
 	static CreateFromMongoDocument(doc: WithId<Document>): UserTrickData {
 		const data: UserTrickData = {
 			trickName: doc.trickName,
-			user: doc.user,
+			user: doc.user.toString(),
 			entryTransitions: doc.entryTransitions,
 			landingStances: doc.landingStances,
-			_id: doc._id,
+			_id: doc._id.toString(),
 		};
 		return data;
 	}
 
-	static CreateEmpty(trickName: string, userID: ObjectId): UserTrickData {
+	static ToMongoDocument(data: UserTrickData): WithId<Document> {
+		const doc: WithId<Document> = {
+			trickName: data.trickName,
+			user: new ObjectId(data.user),
+			entryTransitions: data.entryTransitions,
+			landingStances: data.landingStances,
+			_id: new ObjectId(data._id),
+		};
+		return doc;
+	}
+
+	static CreateEmpty(trickName: string, userID: string): UserTrickData {
 		const entryTransitions = {
 			unified: [],
 			complete: [],
