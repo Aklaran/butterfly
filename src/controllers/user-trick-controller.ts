@@ -31,7 +31,7 @@ export default class UserTrickController {
 		}
 	}
 
-	async createUserTrick(trickName: string) {
+	async createUserTrick(trickName: string): Promise<UserTrickData> {
 		console.log('creating UserTrick for', trickName);
 		try {
 			const response = await fetch(
@@ -49,7 +49,8 @@ export default class UserTrickController {
 				throw new Error(data.error || 'Something went wrong');
 			}
 
-			return;
+			const result = (await response.json()) as UserTrickData;
+			return result;
 		} catch (error) {
 			console.error(
 				'Failed to create UserTrick:',
