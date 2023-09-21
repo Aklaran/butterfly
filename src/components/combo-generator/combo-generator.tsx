@@ -28,6 +28,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
+import { AlertCircle } from 'lucide-react';
 
 export default function ComboGenerator({
 	tricks,
@@ -44,6 +46,7 @@ export default function ComboGenerator({
 
 	const [numPossibleCombos, setNumPossibleCombos] = React.useState(0);
 	const [generatedCombos, setGeneratedCombos] = React.useState<Combo[]>([]);
+	const [hasGenerated, setHasGenerated] = React.useState(false);
 
 	const formSchema = z.object({
 		length: z.number().min(0).max(10),
@@ -63,8 +66,9 @@ export default function ComboGenerator({
 		const selector = new RandomComboSelector(combos);
 		const selectedCombos = selector.take(5);
 
+		setHasGenerated(true);
+
 		if (combos.length === 0) {
-			// TODO: Add error toast or dialog
 			console.error(
 				'Unable to generate any combos. Try reducing the length or adding more tricks!'
 			);
@@ -126,6 +130,19 @@ export default function ComboGenerator({
 					</form>
 				</Form>
 			</div>
+			{hasGenerated && generatedCombos.length === 0 && (
+				<Alert
+					variant='destructive'
+					className='border border-red-500 rounded-md'
+				>
+					<AlertCircle className='h-4 w-4' />
+					<AlertTitle>Error</AlertTitle>
+					<AlertDescription>
+						Unable to generate any combos. Try reducing the length
+						or adding more tricks!
+					</AlertDescription>
+				</Alert>
+			)}
 			{generatedCombos.length > 0 && (
 				<div>
 					<h1 className='text-lg font-bold'>
