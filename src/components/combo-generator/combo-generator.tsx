@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 
-import UserTrickData from '@/models/user-trick/user-trick-data';
 import { TrickData } from '@/models/trick/trick';
 import TrickAnnotationService from '@/services/trick-annotation-service';
 import generateCombos from '@/services/combo-generation-service';
@@ -31,23 +30,15 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { Separator } from '../ui/separator';
+import UserTrickController from '@/controllers/user-trick-controller';
+import { useQuery } from '@tanstack/react-query';
+import Spinner from '../spinner/spinner';
 
-export default function ComboGenerator({
-	tricks,
-	userTricks,
-}: {
-	tricks: TrickData[];
-	userTricks: UserTrickData[] | null;
-}) {
-	const annotationService = new TrickAnnotationService();
-	const annotatedTricks = annotationService.annotateTricks(
-		tricks,
-		userTricks
-	);
-
+export default function ComboGenerator({ tricks }: { tricks: TrickData[] }) {
 	const [numPossibleCombos, setNumPossibleCombos] = React.useState(0);
 	const [generatedCombos, setGeneratedCombos] = React.useState<Combo[]>([]);
 	const [hasGenerated, setHasGenerated] = React.useState(false);
+	const [isGenerating, setIsGenerating] = React.useState(false);
 
 	const formSchema = z.object({
 		length: z.number().min(0).max(10),
@@ -60,9 +51,32 @@ export default function ComboGenerator({
 		},
 	});
 
+	const userTrickController = new UserTrickController();
+
+	const userTrickQuery = useQuery({
+		queryKey: ['user-tricks'],
+		queryFn: () => userTrickController.getAllUserTricks(),
+	});
+
+	if (userTrickQuery.isLoading) {
+		return <Spinner />;
+	}
+
+	if (userTrickQuery.isError)
+		return `An error occurred: ${userTrickQuery.error}`;
+
+	const annotationService = new TrickAnnotationService();
+	const annotatedTricks = annotationService.annotateTricks(
+		tricks,
+		userTrickQuery.data
+	);
+
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		const { length } = values;
+
+		setIsGenerating(true);
 		const combos = generateCombos(annotatedTricks, length);
+		setIsGenerating(false);
 		// TODO: inject interface ComboSelector
 		const selector = new RandomComboSelector(combos);
 		const selectedCombos = selector.take(5);
@@ -123,6 +137,7 @@ export default function ComboGenerator({
 				</form>
 			</Form>
 			<Separator className='my-2' />
+			{isGenerating && <Spinner />}
 			{hasGenerated && generatedCombos.length === 0 && (
 				<Alert
 					variant='destructive'
