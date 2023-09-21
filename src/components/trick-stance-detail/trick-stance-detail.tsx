@@ -14,6 +14,7 @@ import {
 	AccordionTrigger,
 } from '@/components/ui/accordion';
 import UserTrickData from '@/models/user-trick/user-trick-data';
+import Spinner from '../spinner/spinner';
 
 interface TrickStanceDetailProps {
 	baseTrick: TrickData;
@@ -210,7 +211,7 @@ export default function TrickStanceDetail({
 	}
 
 	if (userTrickQuery.isLoading) {
-		return <p>loading...</p>;
+		return <Spinner />;
 	}
 
 	if (userTrickQuery.isError)

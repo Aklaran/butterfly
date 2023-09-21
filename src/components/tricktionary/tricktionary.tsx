@@ -8,6 +8,7 @@ import TrickAnnotationService from '@/services/trick-annotation-service';
 import { TrickData } from '@/models/trick/trick';
 import { useQuery } from '@tanstack/react-query';
 import UserTrickController from '@/controllers/user-trick-controller';
+import Spinner from '../spinner/spinner';
 
 // FIXME: Can I invalidate React Cache on a trick mutation instead?
 // FIXME: Doesn't rerender when navigating to the page with the back button
@@ -26,7 +27,7 @@ export default function Tricktionary({ baseTrickData }: TricktionaryProps) {
 	});
 
 	if (userTrickQuery.isLoading) {
-		return <p>loading...</p>;
+		return <Spinner />;
 	}
 
 	if (userTrickQuery.isError)
