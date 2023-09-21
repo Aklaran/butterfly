@@ -1,12 +1,7 @@
 {
 	"$jsonSchema": {
 		"bsonType": "object",
-		"required": [
-			"trickName",
-			"userID",
-			"entryTransitions",
-			"landingStances"
-		],
+		"required": ["trickName", "user", "entryTransitions", "landingStances"],
 		"properties": {
 			"id": {
 				"bsonType": "objectId"
@@ -14,8 +9,8 @@
 			"trickName": {
 				"bsonType": "string"
 			},
-			"userID": {
-				"bsonType": "string"
+			"user": {
+				"bsonType": "objectId"
 			},
 			"landingStances": {
 				"bsonType": "array",
