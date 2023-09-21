@@ -12,7 +12,7 @@ export default function Home() {
 			route: '/combo-gen',
 		},
 		{
-			label: 'What is this?',
+			label: 'About',
 			route: '/about',
 		},
 	];
