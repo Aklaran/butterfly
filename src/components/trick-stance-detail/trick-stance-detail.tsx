@@ -19,6 +19,31 @@ interface TrickStanceDetailProps {
 	baseTrick: TrickData;
 }
 
+// HACK: Had to really hastily get around crashes due to instantiating
+// Data objects with the Factory since it has mongodb specific fields.
+// Need to always pass strings around the client...
+// And eventually move annotation logic to the API so the client can
+// be dumb as bricks.
+function CreateEmpty(trickName: string, userID: string): UserTrickData {
+	const entryTransitions = {
+		unified: [],
+		complete: [],
+		hyper: [],
+		semi: [],
+		mega: [],
+		turbo: [],
+	};
+
+	const data: UserTrickData = {
+		trickName,
+		user: userID,
+		entryTransitions,
+		landingStances: [],
+	};
+
+	return data;
+}
+
 export default function TrickStanceDetail({
 	baseTrick,
 }: TrickStanceDetailProps) {
@@ -28,18 +53,62 @@ export default function TrickStanceDetail({
 	const userTrickQuery = useQuery({
 		queryKey: ['user-tricks', baseTrick.name],
 		queryFn: () => userTrickController.getUserTrick(baseTrick.name),
-		onSuccess: (data) => {
+		onSettled: (data) => {
 			if (data === null) {
-				createUserTrickMutation.mutate();
+				const optimisticUserTrick = CreateEmpty(
+					baseTrick.name,
+					'optimisticUser (SHOULD ONLY BE ON CLIENT LMAO)'
+				);
+				createUserTrickMutation.mutate(optimisticUserTrick);
 			}
 		},
 	});
 
-	const createUserTrickMutation = useMutation({
+	const createUserTrickMutation = useMutation<
+		unknown,
+		unknown,
+		UserTrickData,
+		unknown
+	>({
 		mutationFn: () => {
+			console.debug('createUserTrickMutation called');
+
 			return userTrickController.createUserTrick(baseTrick.name);
 		},
-		onSuccess: () => {
+		onMutate: async (optimisticUserTrick) => {
+			console.debug('createUserTrickMutation onMutate');
+
+			// Cancel any outgoing refetches
+			// (so they don't overwrite our optimistic update)
+			await queryClient.cancelQueries({
+				queryKey: ['user-tricks', baseTrick.name],
+			});
+
+			// Optimistically update to the new value
+			queryClient.setQueryData(
+				['user-tricks', baseTrick.name],
+				optimisticUserTrick
+			);
+
+			console.debug(
+				'After POST optimistic update, query data:',
+				queryClient.getQueryData(['user-tricks', baseTrick.name])
+			);
+
+			// Return a context with the new UserTrick
+			return { newUserTrick: optimisticUserTrick };
+		},
+		// If the mutation fails, log the error
+		onError: (err) => {
+			// TODO: Pop up a toast or alert
+			console.error(
+				`Creating UserTrick for ${baseTrick.name} failed with error:`,
+				err
+			);
+		},
+		// Always refetch after error or success:
+		onSettled: () => {
+			console.debug('createUserTrickMutation settled');
 			queryClient.invalidateQueries({
 				queryKey: ['user-tricks', baseTrick.name],
 			});
