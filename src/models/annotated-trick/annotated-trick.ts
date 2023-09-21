@@ -29,7 +29,7 @@ export default class AnnotatedTrick {
 		return this._data.trick;
 	}
 
-	get userTrick() {
+	get userTrickData() {
 		return this._data.userTrickData;
 	}
 
@@ -48,24 +48,27 @@ export default class AnnotatedTrick {
 		entryStance: string,
 		entryTransition: string
 	): boolean => {
-		if (this.userTrick == undefined) return false;
-
-		if (this.userTrick.entryTransitions[entryStance] == undefined)
+		if (this.userTrickData == undefined || this.userTrickData == null)
 			return false;
 
-		return this.userTrick.entryTransitions[entryStance].includes(
+		if (this.userTrickData.entryTransitions[entryStance] == undefined)
+			return false;
+
+		return this.userTrickData.entryTransitions[entryStance].includes(
 			entryTransition
 		);
 	};
 
 	isLandingStanceActive = (landingStance: string): boolean => {
-		if (this.userTrick == undefined) return false;
+		if (this.userTrickData == undefined || this.userTrickData == null)
+			return false;
 
-		return this.userTrick.landingStances.includes(landingStance);
+		return this.userTrickData.landingStances.includes(landingStance);
 	};
 
 	isActive(): boolean {
-		if (this.userTrick == undefined) return false;
+		if (this.userTrickData == undefined || this.userTrickData == null)
+			return false;
 
 		const hasOneActiveEntryStance = this.hasActiveEntry();
 		const hasAnActiveLandingStance = this.hasActiveLanding();
@@ -75,9 +78,10 @@ export default class AnnotatedTrick {
 	// PRIVATE METHODS
 
 	private hasActiveEntry(): boolean {
-		if (this.userTrick == undefined) return false;
+		if (this.userTrickData == undefined || this.userTrickData == null)
+			return false;
 
-		return Object.keys(this.userTrick.entryTransitions).some(
+		return Object.keys(this.userTrickData.entryTransitions).some(
 			(transitionsFromStance) => {
 				return transitionsFromStance.length > 0;
 			}
@@ -85,8 +89,9 @@ export default class AnnotatedTrick {
 	}
 
 	private hasActiveLanding(): boolean {
-		if (this.userTrick == undefined) return false;
+		if (this.userTrickData == undefined || this.userTrickData == null)
+			return false;
 
-		return this.userTrick.landingStances.length > 0;
+		return this.userTrickData.landingStances.length > 0;
 	}
 }

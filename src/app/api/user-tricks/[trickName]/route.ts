@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 
 import clientPromise from '@/lib/mongodb';
-import { PartialUpdate } from '@/types/partial-update';
 import { fetchUserTrick } from '@/services/query-service';
 import { getMongoUserID } from '@/services/session-service';
 import UserTrickFactory from '@/models/user-trick/user-trick-factory';
+import UserTrickUpdateRequest from './UserTrickUpdateRequest';
 
 const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
@@ -83,8 +83,9 @@ export async function PATCH(
 	request: Request,
 	{ params }: { params: { trickName: string } }
 ) {
-	const partial: PartialUpdate = await request.json();
+	const requests: UserTrickUpdateRequest[] = await request.json();
 	const { trickName } = params;
+	console.log(`PATCH UserTrick ${trickName} given requests`, requests);
 
 	const userID = await getMongoUserID();
 
@@ -95,17 +96,33 @@ export async function PATCH(
 
 		const filter = { trickName: trickName, user: userID };
 
-		const updateDoc = {
-			$set: partial,
-		};
+		requests.forEach(async (request) => {
+			let updateDoc = {};
 
-		const options = { upsert: true };
+			if (request.field === 'landingStances') {
+				updateDoc =
+					request.action === 'add'
+						? { $addToSet: { [request.field]: request.value } }
+						: { $pull: { [request.field]: request.value } };
+			} else if (request.field === 'entryTransitions') {
+				const key = `entryTransitions.${request.stance}`;
+				updateDoc =
+					request.action === 'add'
+						? { $addToSet: { [key]: request.value } }
+						: { $pull: { [key]: request.value } };
+			}
 
-		const result = await collection.updateOne(filter, updateDoc, options);
-		console.log(
-			`${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
-		);
-		return NextResponse.json(result);
+			const options = { upsert: true };
+
+			const result = await collection.updateOne(
+				filter,
+				updateDoc,
+				options
+			);
+			console.log('PATCH result', result);
+		});
+
+		return NextResponse.json({ message: 'Successfully updated' });
 	} catch (e) {
 		console.error(
 			`PATCH /user-trick/ failed with error ${(e as Error).message}`
@@ -113,3 +130,60 @@ export async function PATCH(
 		return NextResponse.error();
 	}
 }
+
+/** Fully typesafe possible alternative:
+
+type OperationType<T> = 
+  | { op: "set"; value: T }
+  | { op: "addToSet"; value: T }
+  | { op: "pull"; value: T };
+
+interface UserTrickOperations {
+  trickName?: OperationType<string>;
+  user?: OperationType<ObjectId>;
+  entryTransitions?: {
+    [stance: string]: OperationType<string[]>;
+  };
+  landingStances?: OperationType<string[]>;
+  notes?: OperationType<string>;
+}
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: { trickName: string } }
+) {
+  const userID = await getMongoUserID();
+  const { trickName } = params;
+  const userTrickOperations: UserTrickOperations = await request.json();
+
+  try {
+    const client = await clientPromise;
+    const db = client.db(DB);
+    const collection = db.collection(COLLECTION);
+
+    const filter = { trickName: trickName, user: userID };
+    const updateDoc = {};
+
+    for (const [field, operation] of Object.entries(userTrickOperations)) {
+      if (operation) {
+        updateDoc[`$${operation.op}`] = {
+          [field]: operation.value,
+        };
+      }
+    }
+
+    const options = { upsert: true };
+    const result = await collection.updateOne(filter, updateDoc, options);
+    
+    console.log(
+      `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
+    );
+    return NextResponse.json(result);
+  } catch (e) {
+    console.error(
+      `PATCH /user-trick/ failed with error ${(e as Error).message}`
+    );
+    return NextResponse.error();
+  }
+}
+**/

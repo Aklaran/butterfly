@@ -1,6 +1,6 @@
+import UserTrickUpdateRequest from '@/app/api/user-tricks/[trickName]/UserTrickUpdateRequest';
 import { API_URL } from '@/lib/constants';
 import UserTrickData from '@/models/user-trick/user-trick-data';
-import { PartialUpdate } from '@/types/partial-update';
 
 export default class UserTrickController {
 	constructor() {}
@@ -59,11 +59,18 @@ export default class UserTrickController {
 		}
 	}
 
-	async updateUserTrick(trickName: string, partial: PartialUpdate) {
-		console.log(
-			`UserTrickController.updateUserTrick(${trickName}) with partial:`,
-			partial
+	async updateUserTrick(
+		trickName: string,
+		oldData: UserTrickData,
+		newData: UserTrickData
+	) {
+		console.debug(
+			`UserTrickController.updateUserTrick(${trickName}), oldData:`,
+			oldData,
+			'newData:',
+			newData
 		);
+		const updateRequests = this.createUpdateRequests(oldData, newData);
 
 		try {
 			const response = await fetch(
@@ -73,7 +80,7 @@ export default class UserTrickController {
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify(partial),
+					body: JSON.stringify(updateRequests),
 				}
 			);
 
@@ -82,11 +89,77 @@ export default class UserTrickController {
 				throw new Error(data.error || 'Something went wrong');
 			}
 
-			const updatedTrick = await response.json();
-			return updatedTrick;
+			const result = (await response.json()) as UserTrickData;
+			return result;
 		} catch (error) {
 			console.error('Failed to update trick:', error);
 			throw error;
 		}
+	}
+
+	createUpdateRequests(
+		oldData: UserTrickData,
+		newData: UserTrickData
+	): UserTrickUpdateRequest[] {
+		const updateRequests: UserTrickUpdateRequest[] = [];
+
+		// Handling landing stances
+		const oldLandingStances = new Set(oldData.landingStances);
+		const newLandingStances = new Set(newData.landingStances);
+
+		oldLandingStances.forEach((stance) => {
+			if (!newLandingStances.has(stance)) {
+				updateRequests.push({
+					action: 'remove',
+					field: 'landingStances',
+					value: stance,
+				});
+			}
+		});
+
+		newLandingStances.forEach((stance) => {
+			if (!oldLandingStances.has(stance)) {
+				updateRequests.push({
+					action: 'add',
+					field: 'landingStances',
+					value: stance,
+				});
+			}
+		});
+
+		// Handling entry transitions
+		Object.entries(oldData.entryTransitions).forEach(
+			([stance, transitions]) => {
+				const newTransitions = new Set(
+					newData.entryTransitions[stance] || []
+				);
+				const oldTransitions = new Set(transitions);
+
+				oldTransitions.forEach((transition) => {
+					if (!newTransitions.has(transition)) {
+						updateRequests.push({
+							action: 'remove',
+							field: 'entryTransitions',
+							value: transition,
+							stance: stance,
+						});
+					}
+				});
+
+				newTransitions.forEach((transition) => {
+					if (!oldTransitions.has(transition)) {
+						updateRequests.push({
+							action: 'add',
+							field: 'entryTransitions',
+							value: transition,
+							stance: stance,
+						});
+					}
+				});
+			}
+		);
+
+		console.debug('createUpdateRequest returned', updateRequests);
+		return updateRequests;
 	}
 }

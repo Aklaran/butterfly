@@ -7,13 +7,13 @@ import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
 import { TrickData } from '@/models/trick/trick';
 import TableItemGroup from '../table-item-group/table-item-group';
 import TableItem from '../table-item/table-item';
-import { PartialUpdate } from '@/types/partial-update';
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from '@/components/ui/accordion';
+import UserTrickData from '@/models/user-trick/user-trick-data';
 
 interface TrickStanceDetailProps {
 	baseTrick: TrickData;
@@ -46,16 +46,50 @@ export default function TrickStanceDetail({
 		},
 	});
 
-	const userTrickMutation = useMutation<
+	const updateUserTrickMutation = useMutation<
 		unknown,
 		unknown,
-		PartialUpdate,
+		{ oldData: UserTrickData; newData: UserTrickData },
 		unknown
 	>({
-		mutationFn: (partial) => {
-			return userTrickController.updateUserTrick(baseTrick.name, partial);
+		mutationFn: ({ oldData, newData }) => {
+			return userTrickController.updateUserTrick(
+				baseTrick.name,
+				oldData,
+				newData
+			);
 		},
-		onSuccess: () => {
+		onMutate: async ({ newData }) => {
+			console.debug('updateUserTrickMutation onMutate');
+
+			// Cancel any outgoing refetches
+			// (so they don't overwrite our optimistic update)
+			await queryClient.cancelQueries({
+				queryKey: ['user-tricks', baseTrick.name],
+			});
+
+			// Optimistically update to the new value
+			queryClient.setQueryData(['user-tricks', baseTrick.name], newData);
+			console.debug(
+				'After PATCH optimistic update, query data:',
+				queryClient.getQueryData(['user-tricks', baseTrick.name])
+			);
+
+			return;
+		},
+		// If the mutation fails, use the context we returned above
+		onError: (err, { oldData }) => {
+			// TODO: Pop up a toast or alert
+			console.error(
+				`Updating UserTrick for ${baseTrick.name} failed with error:`,
+				err
+			);
+
+			queryClient.setQueryData(['user-tricks', baseTrick.name], oldData);
+		},
+		// Always refetch after error or success:
+		onSettled: () => {
+			console.debug('updateUserTrickMutation settled');
 			queryClient.invalidateQueries({
 				queryKey: ['user-tricks', baseTrick.name],
 			});
@@ -63,11 +97,12 @@ export default function TrickStanceDetail({
 	});
 
 	function handleLandingStanceUpdate(
+		oldData: UserTrickData,
 		stance: string,
-		currState: string[],
 		isActive: boolean
 	) {
-		const stanceSet = new Set(currState);
+		const newData = { ...oldData };
+		const stanceSet = new Set(newData.landingStances);
 
 		if (isActive) {
 			stanceSet.add(stance);
@@ -75,20 +110,24 @@ export default function TrickStanceDetail({
 			stanceSet.delete(stance);
 		}
 
-		const partial = {
-			landingStances: Array.from(stanceSet),
-		};
+		newData.landingStances = Array.from(stanceSet);
 
-		userTrickMutation.mutate(partial);
+		updateUserTrickMutation.mutate({ oldData, newData });
 	}
 
 	function handleEntryTransitionUpdate(
+		oldData: UserTrickData,
 		stance: string,
 		transition: string,
-		currState: string[],
 		isActive: boolean
 	) {
-		const transitionSet = new Set(currState);
+		// Gotcha: Shallow copy with spread operator won't clone nested objects :O
+		const newData = {
+			...oldData,
+			entryTransitions: { ...oldData.entryTransitions },
+		};
+
+		const transitionSet = new Set(newData.entryTransitions[stance]);
 
 		if (isActive) {
 			transitionSet.add(transition);
@@ -96,12 +135,9 @@ export default function TrickStanceDetail({
 			transitionSet.delete(transition);
 		}
 
-		// dot notation - https://docs.mongodb.com/manual/reference/operator/update/positional/#update-documents-in-an-array
-		const partial = {
-			[`entryTransitions.${stance}`]: Array.from(transitionSet),
-		};
+		newData.entryTransitions[stance] = Array.from(transitionSet);
 
-		userTrickMutation.mutate(partial);
+		updateUserTrickMutation.mutate({ oldData, newData });
 	}
 
 	if (userTrickQuery.isLoading) {
@@ -130,9 +166,8 @@ export default function TrickStanceDetail({
 											)}
 											onActivePress={() =>
 												handleLandingStanceUpdate(
+													annotatedTrick.userTrickData,
 													stance,
-													annotatedTrick.userTrick!
-														.landingStances,
 													!annotatedTrick.isLandingStanceActive(
 														stance
 													)
@@ -163,13 +198,12 @@ export default function TrickStanceDetail({
 										isItemActive={
 											annotatedTrick.isEntryTransitionActive
 										}
-										toggleItem={(transition, isActive) =>
+										toggleItem={(transition, targetState) =>
 											handleEntryTransitionUpdate(
+												annotatedTrick.userTrickData,
 												stance,
 												transition,
-												annotatedTrick.trick
-													.entryTransitions[stance],
-												isActive
+												targetState
 											)
 										}
 									/>
