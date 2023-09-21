@@ -82,8 +82,8 @@ export default class AnnotatedTrick {
 			return false;
 
 		return Object.keys(this.userTrickData.entryTransitions).some(
-			(transitionsFromStance) => {
-				return transitionsFromStance.length > 0;
+			(stance) => {
+				return this.userTrickData.entryTransitions[stance].length > 0;
 			}
 		);
 	}
