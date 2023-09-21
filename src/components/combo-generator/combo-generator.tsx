@@ -30,6 +30,7 @@ import {
 } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { AlertCircle } from 'lucide-react';
+import { Separator } from '../ui/separator';
 
 export default function ComboGenerator({
 	tricks,
@@ -80,56 +81,48 @@ export default function ComboGenerator({
 
 	return (
 		<div>
-			<div>
-				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit(onSubmit)}
-						className='space-y-8'
-					>
-						<FormField
-							control={form.control}
-							name='length'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Length</FormLabel>
-									<FormControl>
-										<Select
-											onValueChange={(value) =>
-												field.onChange(Number(value))
-											}
-											defaultValue={field.value.toString()}
-										>
-											<SelectTrigger className='w-[180px]'>
-												<SelectValue placeholder='Length' />
-											</SelectTrigger>
-											<SelectContent>
-												<SelectItem value='2'>
-													2
-												</SelectItem>
-												<SelectItem value='3'>
-													3
-												</SelectItem>
-												<SelectItem value='4'>
-													4
-												</SelectItem>
-												<SelectItem value='5'>
-													5 (this will crash the app)
-												</SelectItem>
-											</SelectContent>
-										</Select>
-									</FormControl>
-									<FormDescription>
-										The length of combos you want to
-										generate.
-									</FormDescription>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<Button type='submit'>Generate</Button>
-					</form>
-				</Form>
-			</div>
+			<Form {...form}>
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className='space-y-8 flex flex-col p-3 items-stretch'
+				>
+					<FormField
+						control={form.control}
+						name='length'
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Length</FormLabel>
+								<FormControl>
+									<Select
+										onValueChange={(value) =>
+											field.onChange(Number(value))
+										}
+										defaultValue={field.value.toString()}
+									>
+										<SelectTrigger className='w-[180px]'>
+											<SelectValue placeholder='Length' />
+										</SelectTrigger>
+										<SelectContent>
+											<SelectItem value='2'>2</SelectItem>
+											<SelectItem value='3'>3</SelectItem>
+											<SelectItem value='4'>4</SelectItem>
+											<SelectItem value='5'>
+												5 (this will crash the app)
+											</SelectItem>
+										</SelectContent>
+									</Select>
+								</FormControl>
+								<FormDescription>
+									How long you want the combo to be.
+								</FormDescription>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<Button type='submit'>Generate</Button>
+				</form>
+			</Form>
+			<Separator className='my-2' />
 			{hasGenerated && generatedCombos.length === 0 && (
 				<Alert
 					variant='destructive'
@@ -144,8 +137,8 @@ export default function ComboGenerator({
 				</Alert>
 			)}
 			{generatedCombos.length > 0 && (
-				<div>
-					<h1 className='text-lg font-bold'>
+				<div className='p-2'>
+					<h1 className='text-lg font-bold text-center'>
 						Combos (showing 5 of {numPossibleCombos} possible)
 					</h1>
 					<DataTable columns={columns} data={generatedCombos} />
