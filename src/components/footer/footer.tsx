@@ -10,7 +10,7 @@ export default function Footer() {
 		<QueryClientProvider client={queryClient}>
 			<footer className='mt-auto bg-primary h-[30px] text-primary-foreground flex justify-center'>
 				<p>
-					Something broken?{' '}
+					Got feedback?{' '}
 					<a
 						className='text-bordeaux'
 						href='https://instagram.com/botbunk'
