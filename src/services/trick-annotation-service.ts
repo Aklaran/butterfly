@@ -1,6 +1,6 @@
 import AnnotatedTrick from '@/models/annotated-trick/annotated-trick';
 import { TrickData } from '@/models/trick/trick';
-import { UserTrickData } from '@/models/user-trick/user-trick';
+import UserTrickData from '@/models/user-trick/user-trick-data';
 
 export default class TrickAnnotationService {
 	constructor() {}

@@ -1,9 +1,9 @@
 import Trick, { TrickData } from '../trick/trick';
-import UserTrick, { UserTrickData } from '../user-trick/user-trick';
+import UserTrickData from '../user-trick/user-trick-data';
 
 export interface AnnotatedTrickData {
 	trick: Trick;
-	userTrick: UserTrick;
+	userTrickData: UserTrickData;
 	name: string;
 }
 
@@ -12,10 +12,9 @@ export default class AnnotatedTrick {
 
 	constructor(trickData: TrickData, userTrickData: UserTrickData) {
 		const trick = new Trick(trickData);
-		const userTrick = new UserTrick(userTrickData);
 		this._data = {
 			trick,
-			userTrick,
+			userTrickData,
 			name: trick.name,
 		};
 	}
@@ -30,8 +29,8 @@ export default class AnnotatedTrick {
 		return this._data.trick;
 	}
 
-	get userTrick() {
-		return this._data.userTrick;
+	get userTrickData() {
+		return this._data.userTrickData;
 	}
 
 	get name() {
@@ -40,7 +39,7 @@ export default class AnnotatedTrick {
 
 	// CLASS METHODS
 	static fromData(data: AnnotatedTrickData) {
-		return new AnnotatedTrick(data.trick.data, data.userTrick.data);
+		return new AnnotatedTrick(data.trick.data, data.userTrickData);
 	}
 
 	// INSTANCE METHODS
@@ -49,24 +48,27 @@ export default class AnnotatedTrick {
 		entryStance: string,
 		entryTransition: string
 	): boolean => {
-		if (this.userTrick == undefined) return false;
-
-		if (this.userTrick.entryTransitions[entryStance] == undefined)
+		if (this.userTrickData == undefined || this.userTrickData == null)
 			return false;
 
-		return this.userTrick.entryTransitions[entryStance].includes(
+		if (this.userTrickData.entryTransitions[entryStance] == undefined)
+			return false;
+
+		return this.userTrickData.entryTransitions[entryStance].includes(
 			entryTransition
 		);
 	};
 
 	isLandingStanceActive = (landingStance: string): boolean => {
-		if (this.userTrick == undefined) return false;
+		if (this.userTrickData == undefined || this.userTrickData == null)
+			return false;
 
-		return this.userTrick.landingStances.includes(landingStance);
+		return this.userTrickData.landingStances.includes(landingStance);
 	};
 
 	isActive(): boolean {
-		if (this.userTrick == undefined) return false;
+		if (this.userTrickData == undefined || this.userTrickData == null)
+			return false;
 
 		const hasOneActiveEntryStance = this.hasActiveEntry();
 		const hasAnActiveLandingStance = this.hasActiveLanding();
@@ -76,18 +78,20 @@ export default class AnnotatedTrick {
 	// PRIVATE METHODS
 
 	private hasActiveEntry(): boolean {
-		if (this.userTrick == undefined) return false;
+		if (this.userTrickData == undefined || this.userTrickData == null)
+			return false;
 
-		return Object.keys(this.userTrick.entryTransitions).some(
-			(transitionsFromStance) => {
-				return transitionsFromStance.length > 0;
+		return Object.keys(this.userTrickData.entryTransitions).some(
+			(stance) => {
+				return this.userTrickData.entryTransitions[stance].length > 0;
 			}
 		);
 	}
 
 	private hasActiveLanding(): boolean {
-		if (this.userTrick == undefined) return false;
+		if (this.userTrickData == undefined || this.userTrickData == null)
+			return false;
 
-		return this.userTrick.landingStances.length > 0;
+		return this.userTrickData.landingStances.length > 0;
 	}
 }

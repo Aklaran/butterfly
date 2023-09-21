@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 
 import clientPromise from '@/lib/mongodb';
-import UserTrick from '@/models/user-trick/user-trick';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { ObjectId } from 'mongodb';
 import { AdapterUser } from 'next-auth/adapters';
+import UserTrickFactory from '@/models/user-trick/user-trick-factory';
 
 const DB = process.env.DB_NAME as string;
 const COLLECTION = process.env.USER_TRICKS_COLLECTION_NAME as string;
@@ -37,8 +37,8 @@ export async function GET() {
 
 		try {
 			for await (const doc of cursor) {
-				const trick = UserTrick.FromMongoDocument(doc);
-				result.push(trick.data);
+				const trick = UserTrickFactory.CreateFromMongoDocument(doc);
+				result.push(trick);
 			}
 		} finally {
 			cursor.close();

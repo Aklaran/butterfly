@@ -1,7 +1,7 @@
 import clientPromise from '@/lib/mongodb';
 import Trick from '@/models/trick/trick';
-import UserTrick from '@/models/user-trick/user-trick';
 import { getMongoUserID } from './session-service';
+import UserTrickFactory from '@/models/user-trick/user-trick-factory';
 
 export async function fetchAllTrickData() {
 	console.log('fetchAllTricks()');
@@ -81,8 +81,8 @@ export async function fetchAllUserTrickData() {
 
 		try {
 			for await (const doc of cursor) {
-				const trick = UserTrick.FromMongoDocument(doc);
-				result.push(trick.data);
+				const trick = UserTrickFactory.CreateFromMongoDocument(doc);
+				result.push(trick);
 			}
 		} finally {
 			cursor.close();
@@ -121,7 +121,7 @@ export async function fetchUserTrick(trickName: string) {
 			);
 		}
 
-		const result = UserTrick.FromMongoDocument(queryResult);
+		const result = UserTrickFactory.CreateFromMongoDocument(queryResult);
 		console.log(result);
 		return result;
 	} catch (e) {
