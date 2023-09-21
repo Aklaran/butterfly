@@ -11,9 +11,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Trickidex',
+	title: 'Butterfly',
 	// eslint-disable-next-line quotes
-	description: "Gotta land 'em all",
+	description: 'Training Companion',
 };
 
 export default function RootLayout({
