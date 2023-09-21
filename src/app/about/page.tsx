@@ -8,11 +8,17 @@ export default function About() {
 				Welcome to Butterfly!
 			</h1>
 			<p className='mb-2'>
-				Track your tricks and generate endless combos.
+				<Link
+					href='/api/auth/signin'
+					className='text-bordeauxDark underline'
+				>
+					Log in
+				</Link>{' '}
+				to track your tricks and generate endless combos.
 			</p>
 			<p className='mb-2'>
 				Visit the{' '}
-				<Link href='/tricks' className='text-bordeaux underline'>
+				<Link href='/tricks' className='text-bordeauxDark underline'>
 					Tricktionary
 				</Link>{' '}
 				to see your tricks.
@@ -22,7 +28,7 @@ export default function About() {
 			</p>
 			<p className='mb-2'>
 				Got some tricks? Try the{' '}
-				<Link className='text-bordeaux underline' href='/combo-gen'>
+				<Link className='text-bordeauxDark underline' href='/combo-gen'>
 					Combo Generator
 				</Link>
 				.
@@ -33,7 +39,7 @@ export default function About() {
 			<p className='mb-2'>
 				Find a bug or got feedback?{' '}
 				<a
-					className='text-bordeaux underline'
+					className='text-bordeauxDark underline'
 					href='https://instagram.com/botbunk'
 				>
 					DM me

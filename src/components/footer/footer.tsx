@@ -12,7 +12,7 @@ export default function Footer() {
 				<p>
 					Got feedback?{' '}
 					<a
-						className='text-bordeaux'
+						className='text-bordeauxLight'
 						href='https://instagram.com/botbunk'
 					>
 						Let Bo know!
