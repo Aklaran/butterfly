@@ -11,7 +11,7 @@ export default function generateCombos(
 	console.time('Combo Generation'); // log exec time
 
 	for (const trick of activeTricks) {
-		for (const landingStance of trick.userTrick!.landingStances) {
+		for (const landingStance of trick.userTrickData!.landingStances) {
 			const combo = intializeCombo(trick, landingStance);
 			buildCombo(combo, combos, activeTricks, 1, targetLength);
 		}
@@ -54,11 +54,14 @@ function buildCombo(
 
 	for (const trick of tricks) {
 		const candidateTransitions =
-			trick.userTrick!.entryTransitions[currentCombo.lastLandingStance!];
+			trick.userTrickData!.entryTransitions[
+				currentCombo.lastLandingStance!
+			];
 
 		if (candidateTransitions) {
 			for (const transition of candidateTransitions) {
-				for (const landingStance of trick.userTrick!.landingStances) {
+				for (const landingStance of trick.userTrickData!
+					.landingStances) {
 					const step = {
 						trick: trick.name,
 						entryTransition: transition,
