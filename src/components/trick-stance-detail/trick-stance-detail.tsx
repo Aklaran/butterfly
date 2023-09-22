@@ -15,6 +15,11 @@ import {
 } from '@/components/ui/accordion';
 import UserTrickData from '@/models/user-trick/user-trick-data';
 import Spinner from '../spinner/spinner';
+import { Textarea } from '../ui/textarea';
+import { Button } from '../ui/button';
+import { Label } from '../ui/label';
+
+// TODO: This component is TOO BIG BRO
 
 interface TrickStanceDetailProps {
 	baseTrick: TrickData;
@@ -51,9 +56,16 @@ export default function TrickStanceDetail({
 	const queryClient = useQueryClient();
 	const userTrickController = new UserTrickController();
 
+	const [notes, setNotes] = React.useState<string>();
+
 	const userTrickQuery = useQuery({
 		queryKey: ['user-tricks', baseTrick.name],
 		queryFn: () => userTrickController.getUserTrick(baseTrick.name),
+		onSuccess: (data) => {
+			if (data !== null && data.notes && !notes) {
+				setNotes(data.notes);
+			}
+		},
 		onSettled: (data) => {
 			if (data === null) {
 				const optimisticUserTrick = CreateEmpty(
@@ -210,6 +222,24 @@ export default function TrickStanceDetail({
 		updateUserTrickMutation.mutate({ oldData, newData });
 	}
 
+	const handleNoteSave = (e: React.MouseEvent) => {
+		e.preventDefault();
+
+		if (!userTrickQuery.data) {
+			console.warn(
+				'Trying to save notes when UserTrick hasnt fetched yet'
+			);
+			return;
+		}
+
+		const oldData = userTrickQuery.data;
+		const newData = {
+			...oldData,
+			notes: notes,
+		};
+		updateUserTrickMutation.mutate({ oldData, newData });
+	};
+
 	if (userTrickQuery.isLoading) {
 		return <Spinner />;
 	}
@@ -220,69 +250,83 @@ export default function TrickStanceDetail({
 	const annotatedTrick = new AnnotatedTrick(baseTrick, userTrickQuery.data);
 
 	return (
-		<div className='flex justify-center'>
-			<Accordion type='multiple' className='w-[200px]'>
-				<AccordionItem value='landing-stances'>
-					<AccordionTrigger>Landing Stances:</AccordionTrigger>
-					<AccordionContent>
-						<ul>
-							{annotatedTrick.trick.landingStances.map(
-								(stance) => (
-									<li className='py-1' key={stance}>
-										<TableItem
-											label={stance}
-											isActive={annotatedTrick.isLandingStanceActive(
-												stance
-											)}
-											onActivePress={() =>
-												handleLandingStanceUpdate(
+		<div className='mt-2'>
+			<div className='flex flex-col gap-1 mb-5'>
+				<Label htmlFor='notes'>Notes</Label>
+				<Textarea
+					id='notes'
+					value={notes}
+					onChange={(e) => setNotes(e.target.value)}
+				/>
+				<Button onClick={(e) => handleNoteSave(e)}>Save</Button>
+			</div>
+			<div className='flex justify-center'>
+				<Accordion type='multiple' className='w-[200px]'>
+					<AccordionItem value='landing-stances'>
+						<AccordionTrigger>Landing Stances:</AccordionTrigger>
+						<AccordionContent>
+							<ul>
+								{annotatedTrick.trick.landingStances.map(
+									(stance) => (
+										<li className='py-1' key={stance}>
+											<TableItem
+												label={stance}
+												isActive={annotatedTrick.isLandingStanceActive(
+													stance
+												)}
+												onActivePress={() =>
+													handleLandingStanceUpdate(
+														annotatedTrick.userTrickData,
+														stance,
+														!annotatedTrick.isLandingStanceActive(
+															stance
+														)
+													)
+												}
+											/>
+										</li>
+									)
+								)}
+							</ul>
+						</AccordionContent>
+					</AccordionItem>
+					<AccordionItem value='entry-transitions'>
+						<AccordionTrigger>Entry Transitions:</AccordionTrigger>
+						<AccordionContent>
+							<div>
+								{Object.keys(
+									annotatedTrick.trick.entryTransitions
+								).map((stance) => {
+									return (
+										<TableItemGroup
+											key={stance}
+											header={stance}
+											items={
+												annotatedTrick.trick
+													.entryTransitions[stance]
+											}
+											isItemActive={
+												annotatedTrick.isEntryTransitionActive
+											}
+											toggleItem={(
+												transition,
+												targetState
+											) =>
+												handleEntryTransitionUpdate(
 													annotatedTrick.userTrickData,
 													stance,
-													!annotatedTrick.isLandingStanceActive(
-														stance
-													)
+													transition,
+													targetState
 												)
 											}
 										/>
-									</li>
-								)
-							)}
-						</ul>
-					</AccordionContent>
-				</AccordionItem>
-				<AccordionItem value='entry-transitions'>
-					<AccordionTrigger>Entry Transitions:</AccordionTrigger>
-					<AccordionContent>
-						<div>
-							{Object.keys(
-								annotatedTrick.trick.entryTransitions
-							).map((stance) => {
-								return (
-									<TableItemGroup
-										key={stance}
-										header={stance}
-										items={
-											annotatedTrick.trick
-												.entryTransitions[stance]
-										}
-										isItemActive={
-											annotatedTrick.isEntryTransitionActive
-										}
-										toggleItem={(transition, targetState) =>
-											handleEntryTransitionUpdate(
-												annotatedTrick.userTrickData,
-												stance,
-												transition,
-												targetState
-											)
-										}
-									/>
-								);
-							})}
-						</div>
-					</AccordionContent>
-				</AccordionItem>
-			</Accordion>
+									);
+								})}
+							</div>
+						</AccordionContent>
+					</AccordionItem>
+				</Accordion>
+			</div>
 		</div>
 	);
 }

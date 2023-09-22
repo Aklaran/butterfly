@@ -10,6 +10,7 @@ export default class UserTrickFactory {
 			user: doc.user.toString(),
 			entryTransitions: doc.entryTransitions,
 			landingStances: doc.landingStances,
+			notes: doc.notes,
 			_id: doc._id.toString(),
 		};
 		return data;
@@ -21,6 +22,7 @@ export default class UserTrickFactory {
 			user: new ObjectId(data.user),
 			entryTransitions: data.entryTransitions,
 			landingStances: data.landingStances,
+			notes: data.notes,
 			_id: new ObjectId(data._id),
 		};
 		return doc;
@@ -41,6 +43,7 @@ export default class UserTrickFactory {
 			user: userID,
 			entryTransitions,
 			landingStances: [],
+			notes: '',
 		};
 
 		return data;

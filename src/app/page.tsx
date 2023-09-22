@@ -8,6 +8,10 @@ export default function Home() {
 			route: '/tricks',
 		},
 		{
+			label: 'Combos',
+			route: '/combos',
+		},
+		{
 			label: 'Combo Generator',
 			route: '/combo-gen',
 		},

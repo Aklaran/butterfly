@@ -160,6 +160,16 @@ export default class UserTrickController {
 			}
 		);
 
+		// Handling notes
+
+		if (oldData.notes !== newData.notes) {
+			updateRequests.push({
+				action: 'replace',
+				field: 'notes',
+				value: newData.notes,
+			});
+		}
+
 		console.debug('createUpdateRequest returned', updateRequests);
 		return updateRequests;
 	}

@@ -1,5 +1,8 @@
 export interface ComboData {
 	steps: ComboStep[];
+	user?: string;
+	notes?: string;
+	_id?: string;
 }
 
 export interface ComboStep {

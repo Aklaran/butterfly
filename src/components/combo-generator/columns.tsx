@@ -12,11 +12,20 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import LikeButton from '../like-button/like-button';
 
 export const columns: ColumnDef<Combo>[] = [
 	{
 		accessorKey: 'text',
 		header: 'Combo',
+	},
+	{
+		id: 'like',
+		cell: ({ row }) => {
+			const combo = row.original;
+
+			return <LikeButton combo={combo} />;
+		},
 	},
 	{
 		id: 'actions',

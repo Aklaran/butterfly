@@ -21,6 +21,10 @@ const pages = [
 		route: '/tricks',
 	},
 	{
+		label: 'Combos',
+		route: '/combos',
+	},
+	{
 		label: 'Combo Generator',
 		route: '/combo-gen',
 	},
