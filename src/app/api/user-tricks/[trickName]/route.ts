@@ -110,6 +110,10 @@ export async function PATCH(
 					request.action === 'add'
 						? { $addToSet: { [key]: request.value } }
 						: { $pull: { [key]: request.value } };
+			} else if (request.field === 'notes') {
+				if (request.action === 'replace') {
+					updateDoc = { $set: { [request.field]: request.value } };
+				}
 			}
 
 			const options = { upsert: true };

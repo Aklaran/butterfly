@@ -3,6 +3,7 @@ export default interface UserTrickData {
 	user: string;
 	entryTransitions: { [index: string]: string[] };
 	landingStances: string[];
+	notes?: string;
 	_id?: string;
 	// eslint-disable-next-line semi
 }

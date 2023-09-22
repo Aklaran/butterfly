@@ -1,6 +1,6 @@
 export default interface UserTrickUpdateRequest {
-	action: 'add' | 'remove';
-	field: 'landingStances' | 'entryTransitions';
+	action: 'add' | 'remove' | 'replace';
+	field: 'landingStances' | 'entryTransitions' | 'notes';
 	// TODO: Try out more typesafe alternative commented below
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	value: any;
