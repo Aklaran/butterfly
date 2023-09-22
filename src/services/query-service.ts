@@ -2,6 +2,7 @@ import clientPromise from '@/lib/mongodb';
 import Trick from '@/models/trick/trick';
 import { getMongoUserID } from './session-service';
 import UserTrickFactory from '@/models/user-trick/user-trick-factory';
+import ComboFactory from '@/models/combo/combo-factory';
 
 export async function fetchAllTrickData() {
 	console.log('fetchAllTricks()');
@@ -131,6 +132,41 @@ export async function fetchUserTrick(trickName: string) {
 			}`
 		);
 
+		return null;
+	}
+}
+
+export async function fetchAllUserComboData() {
+	console.debug('fetchAllUserCombos()');
+
+	const DB = process.env.DB_NAME as string;
+	const COLLECTION = process.env.USER_COMBOS_COLLECTION_NAME as string;
+
+	try {
+		const userObjectID = await getMongoUserID();
+
+		if (userObjectID === null) {
+			return null;
+		}
+		const client = await clientPromise;
+		const db = client.db(DB);
+
+		const cursor = db.collection(COLLECTION).find({ user: userObjectID });
+
+		const result = [];
+
+		try {
+			for await (const doc of cursor) {
+				const trick = ComboFactory.CreateFromMongoDocument(doc);
+				result.push(trick);
+			}
+		} finally {
+			cursor.close();
+		}
+
+		return result;
+	} catch (e) {
+		console.error(`GET /trick/ failed with error ${(e as Error).message}`);
 		return null;
 	}
 }
